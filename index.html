@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,6 +8,7 @@
 <meta name="description" content="AKE Records — Label indépendant parisien. R&B, Trap, Soul. Artiste : AKE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="light-theme.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -225,6 +227,7 @@ footer{background:var(--black);padding:5rem 3rem 2.5rem;border-top:1px solid var
     <li><a href="#plateformes">Streaming</a></li>
     <li><a href="#merch">Merch</a></li>
     <li><a href="#footer">Contact</a></li>
+    <li><a href="studio.html">Studio</a></li>
   </ul>
   <a href="ake_inner_circle.html" class="nav-cta">Inner Circle</a>
   <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -235,6 +238,7 @@ footer{background:var(--black);padding:5rem 3rem 2.5rem;border-top:1px solid var
   <a href="#plateformes" onclick="closeMob()">Streaming</a>
   <a href="#merch" onclick="closeMob()">Merch</a>
   <a href="#footer" onclick="closeMob()">Contact</a>
+  <a href="studio.html" onclick="closeMob()">Studio</a>
   <a href="ake_inner_circle.html" class="mob-cta">Inner Circle</a>
 </div>
 
@@ -270,14 +274,12 @@ footer{background:var(--black);padding:5rem 3rem 2.5rem;border-top:1px solid var
     <span class="marquee-item">Sourire <b>◆</b></span>
     <span class="marquee-item">AKE feat. Azam <b>◆</b></span>
     <span class="marquee-item">Paris · Indépendant <b>◆</b></span>
-    <span class="marquee-item">Wah Gwan <b>◆</b></span>
     <span class="marquee-item">Couma <b>◆</b></span>
     <span class="marquee-item">R&amp;B · Trap · Soul <b>◆</b></span>
     <span class="marquee-item">AKE Records <b>◆</b></span>
     <span class="marquee-item">Sourire <b>◆</b></span>
     <span class="marquee-item">AKE feat. Azam <b>◆</b></span>
     <span class="marquee-item">Paris · Indépendant <b>◆</b></span>
-    <span class="marquee-item">Wah Gwan <b>◆</b></span>
     <span class="marquee-item">Couma <b>◆</b></span>
     <span class="marquee-item">R&amp;B · Trap · Soul <b>◆</b></span>
   </div>
@@ -348,23 +350,7 @@ footer{background:var(--black);padding:5rem 3rem 2.5rem;border-top:1px solid var
         </div>
       </div>
     </div>
-    <div class="release reveal">
-      <div class="release-art">
-        <div class="release-art-bg" style="background:radial-gradient(ellipse at 60% 50%,#1a1c08 0%,#0e0d0c 100%)"></div>
-        <div class="release-art-letter">W</div>
-        <div class="release-num">02</div>
-        <div class="release-badge">Single</div>
-      </div>
-      <div class="release-body">
-        <div class="release-title">Wah Gwan</div>
-        <div class="release-feat">AKE · 2024</div>
-        <div class="release-stream">
-          <a href="#" class="stream-btn">Spotify</a>
-          <a href="#" class="stream-btn">Deezer</a>
-          <a href="#" class="stream-btn">Apple</a>
-        </div>
-      </div>
-    </div>
+
     <div class="release reveal">
       <div class="release-art">
         <div class="release-art-bg" style="background:radial-gradient(ellipse at 50% 60%,#0e1520 0%,#0e0d0c 100%)"></div>
@@ -491,6 +477,21 @@ footer{background:var(--black);padding:5rem 3rem 2.5rem;border-top:1px solid var
 </section>
 
 <!-- ══ INNER CIRCLE CTA ══ -->
+
+<!-- ══ STUDIO CTA ══ -->
+<section id="studio-cta" style="background:var(--deep,#141210);padding:6rem 3rem;text-align:center;border-top:1px solid rgba(212,149,32,.12)">
+  <div style="max-width:580px;margin:0 auto">
+    <div style="font-family:var(--font-m,'DM Mono',monospace);font-size:.57rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold,#d49520);margin-bottom:1.5rem" class="reveal">Studio AKE Records · Paris</div>
+    <h2 style="font-family:var(--font-d,'Cormorant Garamond',serif);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:.95;margin-bottom:1rem" class="reveal">Session<br><em style="color:#f0b535;font-style:italic">studio</em></h2>
+    <p style="font-family:var(--font-d,'Cormorant Garamond',serif);font-style:italic;color:var(--muted,#8a7a68);font-size:1rem;margin-bottom:.8rem;line-height:1.8;max-width:420px;margin-left:auto;margin-right:auto" class="reveal">Titre complet — enregistrement, pré-mix, prémastérisation et direction artistique inclus.</p>
+    <div style="font-family:var(--font-m,'DM Mono',monospace);font-size:.62rem;letter-spacing:.15em;color:var(--gold,#d49520);margin-bottom:2.5rem" class="reveal">Pack Bienvenu · 100€ · Disponible 24h/24</div>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap" class="reveal">
+      <a href="studio.html" style="font-family:var(--font-m,'DM Mono',monospace);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;padding:.9rem 2.2rem;background:var(--gold,#d49520);color:#0c0a08;text-decoration:none;border:none;font-weight:500;transition:background .25s;display:inline-block">Réserver une session</a>
+      <a href="ake_inner_circle.html" style="font-family:var(--font-m,'DM Mono',monospace);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;padding:.9rem 2.2rem;background:transparent;color:var(--cream,#f5eedd);text-decoration:none;border:1px solid rgba(212,149,32,.25);transition:all .25s;display:inline-block">Inner Circle →</a>
+    </div>
+  </div>
+</section>
+
 <section id="inner-cta">
   <div class="ic-eyebrow reveal">Accès exclusif</div>
   <h2 class="ic-title reveal">Inner<br><em>Circle</em></h2>
@@ -522,6 +523,7 @@ footer{background:var(--black);padding:5rem 3rem 2.5rem;border-top:1px solid var
         <li><a href="#artiste">Artiste</a></li>
         <li><a href="#plateformes">Streaming</a></li>
         <li><a href="#merch">Merch</a></li>
+        <li><a href="studio.html">Studio</a></li>
         <li><a href="ake_inner_circle.html">Inner Circle</a></li>
       </ul>
     </div>
@@ -572,3 +574,4 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
+

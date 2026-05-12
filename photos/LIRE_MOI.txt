@@ -1,0 +1,31 @@
+DOSSIER PHOTOS — AKE Records (akerecords.fr)
+============================================
+
+Dépose ici les photos suivantes (JPEG ou PNG) :
+
+SITE AKE RECORDS :
+------------------
+hero_label.jpg    → Photo hero page d'accueil (droite du titre)
+                    Format recommandé : portrait ou paysage, ratio ~3:4
+                    Lumière chaude / studio ou live
+
+label_1.jpg       → Grande photo gauche dans "Le label"
+                    Format recommandé : portrait, ratio ~2:3
+
+label_2.jpg       → Petite photo haute dans "Le label"
+                    Sujet recommandé : studio, console, micro...
+
+label_3.jpg       → Petite photo basse dans "Le label"
+                    Sujet recommandé : artiste, session, équipe...
+
+studio.jpg        → Photo de fond du bloc studio (fond sombre recommandé)
+                    Opacité réduite à 35% — les détails sombres fonctionnent bien
+
+SITE AKE ARTISTE (à créer dans le repo ake-artist/photos/) :
+-------------------------------------------------------------
+artist_hero.jpg   → Photo de fond du hero (pleine page)
+                    Portrait en pied ou mi-corps
+                    Lumière sombre recommandée — le gradient assombrit le bas
+                    Format : 1200x1600px minimum (ou 4:5)
+
+Les noms de fichiers doivent être exactement ceux indiqués ci-dessus.

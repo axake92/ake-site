@@ -1,9 +1,8 @@
 @echo off
-echo AKE Records -- Git Push
-cd /d "C:\Users\axela\Desktop\AKE\SITE"
+cd /d "C:\Users\axela\Desktop\AKE\Ake Records - site"
 "C:\Program Files\Git\cmd\git.exe" add -A
-"C:\Program Files\Git\cmd\git.exe" commit -m "feat: light theme + dossier videos inner circle"
+"C:\Program Files\Git\cmd\git.exe" commit -m "update: site akerecords.fr"
 "C:\Program Files\Git\cmd\git.exe" push
 echo.
-echo Deploiement Netlify en cours automatiquement...
+echo Deploiement Netlify en cours...
 pause

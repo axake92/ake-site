@@ -1,577 +1,592 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AKE Records — Label Indépendant · Paris</title>
-<meta name="description" content="AKE Records — Label indépendant parisien. R&B, Trap, Soul. Artiste : AKE.">
+<title>AKE Records — Label · Studio · Paris</title>
+<meta name="description" content="AKE Records — Label indépendant parisien. R&B, Trap, Soul. Studio ouvert 24h/24.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="light-theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --black:#080808;--deep:#0e0d0c;--card:#131110;
-  --border:rgba(200,144,42,.13);--border2:rgba(200,144,42,.06);
-  --gold:#c8902a;--gold-l:#e8b84b;--gold-d:#9a6d1e;
-  --cream:#f0ebe0;--muted:#6b6560;--dim:#3a3530;
-  --font-d:'Cormorant Garamond',Georgia,serif;
-  --font-b:'Outfit',sans-serif;
-  --font-m:'DM Mono',monospace;
+  --iv:#F6F5ED;--sand:#EAE0CC;--sand2:#DDD0B4;--card:#FFFFFF;
+  --gold:#A87830;--gold-l:#C9963C;--ink:#0C1218;--wood:#5E4A2E;--dim:#B8A880;
+  --border:rgba(139,103,64,.18);--fd:'Cormorant Garamond',Georgia,serif;
+  --fb:'Outfit',sans-serif;--fm:'DM Mono',monospace;
 }
-html{scroll-behavior:smooth;background:var(--black)}
-body{font-family:var(--font-b);color:var(--cream);background:var(--black);overflow-x:hidden;cursor:none}
-
-/* GRAIN */
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.5}
-
-/* CURSOR */
-.cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .2s,height .2s}
-.cur.big{width:36px;height:36px;opacity:.4}
+html{scroll-behavior:smooth;background:var(--iv)}
+body{font-family:var(--fb);color:var(--ink);background:var(--iv);overflow-x:hidden;cursor:none}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.3}
+.cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s,height .18s}
+.cur.big{width:30px;height:30px;opacity:.35}
 @media(hover:none){.cur{display:none}body{cursor:auto}}
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;transition:background .4s,border-color .4s}
-nav.scrolled{background:rgba(8,8,8,.96);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
-.nav-logo{font-family:var(--font-d);font-size:1.25rem;font-weight:400;letter-spacing:.1em;color:var(--cream);text-decoration:none;display:flex;align-items:baseline;gap:.3rem}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;transition:all .4s}
+nav.on{background:rgba(246,245,237,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+.nav-logo{font-family:var(--fd);font-size:1.2rem;font-weight:400;color:var(--ink);text-decoration:none}
 .nav-logo em{color:var(--gold);font-style:italic}
-.nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
-.nav-links a{font-family:var(--font-m);font-size:.57rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--cream)}
-.nav-cta{font-family:var(--font-m);font-size:.57rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(200,144,42,.4);padding:.55rem 1.3rem;text-decoration:none;transition:all .25s;white-space:nowrap}
-.nav-cta:hover{background:var(--gold);color:var(--black)}
+.nav-links{display:flex;align-items:center;gap:2.2rem;list-style:none}
+.nav-links a{font-family:var(--fm);font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--wood);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{font-family:var(--fm);font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;padding:.55rem 1.3rem;background:var(--gold);color:var(--iv);text-decoration:none;transition:background .2s}
+.nav-cta:hover{background:var(--gold-l)}
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:600}
-.burger span{width:22px;height:1px;background:var(--cream);display:block;transition:.3s}
-.mob-nav{position:fixed;inset:0;background:rgba(8,8,8,.99);z-index:490;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;opacity:0;transition:opacity .3s;pointer-events:none}
+.burger span{width:22px;height:1px;background:var(--ink);display:block}
+.mob-nav{position:fixed;inset:0;background:rgba(246,245,237,.99);z-index:490;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2rem;opacity:0;transition:opacity .3s;pointer-events:none}
 .mob-nav.open{display:flex;opacity:1;pointer-events:all}
-.mob-nav a{font-family:var(--font-d);font-size:2.6rem;font-weight:300;color:var(--cream);text-decoration:none;transition:color .2s}
+.mob-nav a{font-family:var(--fd);font-size:2.4rem;font-weight:300;color:var(--ink);text-decoration:none;transition:color .2s}
 .mob-nav a:hover{color:var(--gold)}
-.mob-nav .mob-cta{font-family:var(--font-m);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(200,144,42,.4);padding:.7rem 2rem;margin-top:1rem}
+.mob-cta{font-family:var(--fm)!important;font-size:.65rem!important;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)!important;border:1px solid rgba(168,120,48,.4);padding:.7rem 2rem}
 
-/* ── HERO ── */
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;text-align:center;padding:9rem 2rem 7rem}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 90% 70% at 50% 40%,#1c1106 0%,var(--black) 68%);z-index:0}
-.hero-bg::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(200,144,42,.016) 80px,rgba(200,144,42,.016) 81px),repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(200,144,42,.016) 80px,rgba(200,144,42,.016) 81px)}
-.hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent,var(--black))}
-.hero-content{position:relative;z-index:1;max-width:680px}
-.hero-eyebrow{font-family:var(--font-m);font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;opacity:0;animation:rise .8s .1s cubic-bezier(.16,1,.3,1) forwards;display:flex;align-items:center;justify-content:center;gap:1rem}
-.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:24px;height:1px;background:rgba(200,144,42,.5)}
-h1.hero-title{font-family:var(--font-d);font-size:clamp(5rem,12vw,10rem);font-weight:300;line-height:.86;letter-spacing:-.025em;color:var(--cream);margin-bottom:2.5rem;opacity:0;animation:rise .9s .2s cubic-bezier(.16,1,.3,1) forwards}
-h1.hero-title em{display:block;font-style:italic;color:var(--gold-l)}
-.hero-intro{font-family:var(--font-d);font-size:1.15rem;font-weight:300;font-style:italic;color:var(--muted);line-height:1.85;max-width:480px;margin:0 auto 3.5rem;opacity:0;animation:rise .9s .38s cubic-bezier(.16,1,.3,1) forwards}
-.hero-links{display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:wrap;opacity:0;animation:rise .9s .52s cubic-bezier(.16,1,.3,1) forwards}
-.hero-link{font-family:var(--font-m);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:.75rem 1.6rem;border:1px solid var(--border);color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:.7rem;transition:all .25s}
-.hero-link:hover{border-color:var(--gold);color:var(--gold)}
-.hero-link svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
-.hero-link.primary{border-color:rgba(200,144,42,.4);color:var(--gold)}
-.hero-link.primary:hover{background:var(--gold);color:var(--black)}
-.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;font-family:var(--font-m);font-size:.5rem;letter-spacing:.22em;color:var(--dim);animation:bob 2.5s ease-in-out infinite;z-index:1}
-.scroll-hint::after{content:'';width:1px;height:44px;background:linear-gradient(var(--dim),transparent)}
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:flex-end;padding:7rem 3rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#E8DBBE 0%,var(--iv) 55%,#EDE8D8 100%)}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(139,103,64,.022) 60px,rgba(139,103,64,.022) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(139,103,64,.022) 60px,rgba(139,103,64,.022) 61px)}
+/* Photo label: placer photos/hero_label.jpg ici */
+.hero-photo{position:absolute;right:0;top:0;bottom:0;width:42%;background:var(--sand2) url('photos/hero_label.jpg') center/cover no-repeat;opacity:0;transition:opacity 1s .3s}
+.hero-photo.loaded{opacity:1}
+.hero-photo::before{content:'';position:absolute;left:0;top:0;bottom:0;width:60%;background:linear-gradient(to right,var(--iv),transparent)}
+.hero-photo-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem}
+.hero-content{position:relative;z-index:1;max-width:580px}
+.hero-tag{font-family:var(--fm);font-size:.57rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;display:flex;align-items:center;gap:.7rem;opacity:0;animation:rise .7s .1s ease forwards}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--gold)}
+h1{font-family:var(--fd);font-size:clamp(3.5rem,8vw,7.5rem);font-weight:300;line-height:.88;color:var(--ink);margin-bottom:1.2rem;opacity:0;animation:rise .8s .2s ease forwards}
+h1 em{display:block;font-style:italic;color:var(--gold)}
+.hero-sub{font-family:var(--fd);font-size:1rem;font-weight:300;font-style:italic;color:var(--wood);line-height:1.8;max-width:400px;margin-bottom:2.5rem;opacity:0;animation:rise .8s .35s ease forwards}
+.hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;opacity:0;animation:rise .8s .5s ease forwards}
+.btn-fill{font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:.82rem 1.9rem;background:var(--gold);color:var(--iv);text-decoration:none;transition:background .2s;display:inline-block}
+.btn-fill:hover{background:var(--gold-l)}
+.btn-line{font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:.82rem 1.9rem;border:1px solid rgba(139,103,64,.3);color:var(--wood);text-decoration:none;transition:all .2s;display:inline-block}
+.btn-line:hover{border-color:var(--gold);color:var(--gold)}
 
-/* ── MARQUEE ── */
-.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;position:relative;z-index:2}
-.marquee-track{display:flex;white-space:nowrap;animation:march 32s linear infinite}
-.marquee-track:hover{animation-play-state:paused}
-.marquee-item{font-family:var(--font-m);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);padding:0 3.5rem;display:inline-flex;align-items:center;gap:1.2rem}
-.marquee-item b{color:var(--gold);font-weight:400}
+/* MARQUEE */
+.mq-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--sand);padding:10px 0}
+.mq-track{display:flex;white-space:nowrap;animation:march 34s linear infinite}
+.mq-item{font-family:var(--fm);font-size:.54rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);padding:0 3rem;display:inline-flex;align-items:center;gap:1rem}
+.mq-item b{color:var(--gold);font-weight:400}
 
-/* ── SECTION BASE ── */
-section{padding:7rem 3rem}
-.s-eyebrow{font-family:var(--font-m);font-size:.57rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
-.s-eyebrow::after{content:'';width:32px;height:1px;background:var(--border)}
-.s-title{font-family:var(--font-d);font-size:clamp(2.8rem,5vw,5rem);font-weight:300;line-height:.9;letter-spacing:-.02em;margin-bottom:.5rem}
-.s-title em{font-style:italic;color:var(--gold-l)}
-.s-sub{font-family:var(--font-d);font-size:1rem;font-style:italic;color:var(--muted);margin-bottom:3.5rem}
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .75s,transform .75s}
-.reveal.visible{opacity:1;transform:none}
+/* SECTIONS */
+.sec{padding:7rem 3rem}
+.sec.sand{background:var(--sand)}
+.sec.sand2{background:var(--sand2)}
+.sec.ink{background:var(--ink);color:var(--iv)}
+.s-tag{font-family:var(--fm);font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+.s-tag::after{content:'';width:24px;height:1px;background:rgba(168,120,48,.3)}
+.s-h{font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.02;color:var(--ink)}
+.s-h em{font-style:italic;color:var(--gold)}
+.ink .s-h{color:var(--iv)}
+.s-p{font-family:var(--fd);font-style:italic;font-size:1rem;color:var(--wood);line-height:1.85;max-width:560px;margin-top:.6rem}
+.ink .s-p{color:rgba(245,237,216,.55)}
 
-/* ── ARTISTE ── */
-#artiste{background:var(--deep)}
-.artist-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:start;margin-bottom:6rem}
-.artist-visual{position:relative}
-.artist-frame{aspect-ratio:2/3;background:var(--card);border:1px solid var(--border);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.artist-frame-inner{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 40% 30%,#1c1005 0%,var(--card) 70%)}
-.artist-frame-name{font-family:var(--font-d);font-size:9rem;font-weight:300;color:rgba(200,144,42,.055);letter-spacing:.08em;user-select:none;position:relative;z-index:1;line-height:1}
-.artist-label-tag{position:absolute;top:1.5rem;left:1.5rem;font-family:var(--font-m);font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(200,144,42,.3);padding:.35rem .8rem}
-.artist-caption{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;background:linear-gradient(transparent,rgba(8,8,8,.95));border-top:1px solid var(--border)}
-.artist-caption-name{font-family:var(--font-d);font-size:2rem;font-weight:300;line-height:1}
-.artist-caption-role{font-family:var(--font-m);font-size:.55rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-top:.3rem}
-.artist-text{display:flex;flex-direction:column;gap:2.2rem;padding-top:1rem}
-.artist-quote{font-family:var(--font-d);font-size:1.9rem;font-weight:300;font-style:italic;line-height:1.35;color:var(--cream);border-left:2px solid var(--gold);padding-left:1.6rem}
-.artist-bio{font-size:.92rem;color:var(--muted);line-height:2;font-weight:300;max-width:440px}
-.artist-socials{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.5rem}
-.artist-social{font-family:var(--font-m);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:.45rem 1rem;border:1px solid var(--border);color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:all .22s}
-.artist-social:hover{border-color:var(--gold);color:var(--gold)}
-.artist-social svg{width:11px;height:11px;fill:currentColor}
+/* ── LABEL SECTION ── */
+#label .label-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.label-text{}
+.label-text .s-p{max-width:480px}
+.label-body{font-size:.88rem;color:var(--wood);line-height:1.85;margin-top:1.5rem;max-width:480px}
+.label-body p+p{margin-top:1rem}
+.label-pillars{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:2rem}
+.lp{background:var(--iv);padding:1.2rem 1.4rem}
+.lp-icon{font-size:1.2rem;margin-bottom:.5rem}
+.lp-title{font-family:var(--fm);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.lp-desc{font-size:.8rem;color:var(--wood);line-height:1.6}
+/* Photos label */
+.label-photos{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.label-photo{aspect-ratio:3/4;background:var(--sand2);overflow:hidden;position:relative}
+.label-photo:first-child{grid-row:span 2;aspect-ratio:2/3}
+.label-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.label-photo-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;text-align:center;padding:1rem}
+.ph-icon{font-size:1.5rem;opacity:.3}
+.ph-text{font-family:var(--fm);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);text-align:center}
 
-/* ── SORTIES ── */
-.releases-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.8rem}
-.releases-label{font-family:var(--font-m);font-size:.57rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.releases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-.release{background:var(--card);position:relative;overflow:hidden;transition:background .3s;cursor:default}
-.release:hover{background:#1c1a16}
-.release-art{aspect-ratio:1;background:var(--deep);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.release-art-bg{position:absolute;inset:0}
-.release-art-letter{font-family:var(--font-d);font-size:6rem;font-weight:300;color:rgba(200,144,42,.07);letter-spacing:.05em;user-select:none;position:relative;z-index:1}
-.release-num{position:absolute;top:.9rem;left:1rem;font-family:var(--font-m);font-size:.5rem;letter-spacing:.15em;color:var(--dim)}
-.release-badge{position:absolute;top:.9rem;right:1rem;font-family:var(--font-m);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .6rem;background:var(--gold);color:var(--black);font-weight:500}
-.release-body{padding:1.3rem 1.4rem 1.5rem}
-.release-title{font-family:var(--font-d);font-size:1.5rem;font-weight:300;margin-bottom:.2rem;line-height:1.1}
-.release-feat{font-family:var(--font-m);font-size:.53rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:1rem}
-.release-stream{display:flex;gap:.5rem;flex-wrap:wrap}
-.stream-btn{font-family:var(--font-m);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border:1px solid var(--border);color:var(--dim);text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
-.stream-btn:hover{border-color:var(--gold);color:var(--gold)}
-.stream-btn svg{width:9px;height:9px;fill:currentColor}
+/* ── STUDIO ── */
+#studio .studio-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.studio-rules{display:flex;flex-direction:column;gap:1px;background:var(--border);margin:1.8rem 0}
+.srule{display:flex;gap:1rem;align-items:flex-start;background:var(--iv);padding:1rem 1.2rem}
+.srule-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem}
+.srule-head{font-family:var(--fm);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}
+.srule-desc{font-size:.8rem;color:var(--wood);line-height:1.6}
+.studio-vis{background:var(--ink);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:380px}
+.sv-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,#1C0F00 0%,#080604 100%)}
+.sv-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(168,120,48,.04) 40px,rgba(168,120,48,.04) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(168,120,48,.04) 40px,rgba(168,120,48,.04) 41px)}
+/* Photo studio: photos/studio.jpg */
+.sv-photo{position:absolute;inset:0;background:url('photos/studio.jpg') center/cover no-repeat;opacity:.35}
+.sv-word{position:relative;z-index:1;font-family:var(--fd);font-size:4.5rem;font-weight:300;color:rgba(168,120,48,.07);letter-spacing:.5em;text-transform:uppercase}
+.sv-badge{position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;background:rgba(246,245,237,.05);border:1px solid rgba(168,120,48,.18);padding:1.1rem;backdrop-filter:blur(6px);z-index:2}
+.svb-dot{width:5px;height:5px;border-radius:50%;background:#39b070;box-shadow:0 0 6px #39b070;display:inline-block;margin-right:.5rem;vertical-align:middle}
+.svb-open{font-family:var(--fm);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(168,120,48,.75);margin-bottom:.4rem}
+.svb-title{font-family:var(--fd);font-size:1.3rem;font-weight:300;color:var(--iv);margin-bottom:.2rem}
+.svb-price{font-family:var(--fm);font-size:.58rem;color:rgba(232,216,168,.7)}
 
-/* ── PLATEFORMES ── */
-#plateformes{background:var(--black)}
-.plat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:3.5rem}
-.plat-col{background:var(--black);padding:2.5rem}
-.plat-col-title{font-family:var(--font-m);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;padding-bottom:.9rem;border-bottom:1px solid var(--border)}
-.plat-list{display:flex;flex-direction:column;gap:2px}
-.plat-link{display:flex;align-items:center;gap:1rem;padding:1rem .8rem;border:1px solid transparent;text-decoration:none;transition:all .22s;cursor:pointer}
-.plat-link:hover{border-color:var(--border);background:var(--card)}
-.plat-link:hover .plat-arrow{transform:translateX(5px);color:var(--gold)}
-.plat-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);flex-shrink:0;background:var(--deep)}
-.plat-icon svg{width:16px;height:16px;fill:currentColor;color:var(--muted)}
-.plat-name{flex:1;font-size:.88rem;font-weight:300;color:var(--muted)}
-.plat-handle{font-family:var(--font-m);font-size:.52rem;letter-spacing:.1em;color:var(--dim);margin-top:.1rem}
-.plat-arrow{font-family:var(--font-m);font-size:.65rem;color:var(--dim);transition:transform .2s,color .2s;flex-shrink:0}
+/* ── PACK ── */
+#pack .pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.pack-card{background:var(--iv);padding:2rem 1.8rem}
+.pack-num{font-family:var(--fm);font-size:.48rem;letter-spacing:.18em;color:var(--dim);margin-bottom:.8rem}
+.pack-icon{font-size:1.4rem;margin-bottom:.8rem}
+.pack-name{font-family:var(--fd);font-size:1.3rem;font-weight:300;margin-bottom:.3rem;color:var(--ink)}
+.pack-price{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;color:var(--gold);margin-bottom:1rem}
+.pack-feats{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.pack-feats li{font-size:.8rem;color:var(--wood);line-height:1.6;display:flex;gap:.5rem;align-items:flex-start}
+.pack-feats li::before{content:'—';color:var(--gold);flex-shrink:0;font-family:var(--fm);font-size:.65rem;line-height:1.4}
+.pack-badge{display:inline-block;margin-top:.9rem;font-family:var(--fm);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .6rem;background:rgba(57,176,112,.1);border:1px solid rgba(57,176,112,.22);color:rgba(40,150,90,.85)}
 
-/* ── MERCH ── */
-#merch{background:var(--deep)}
-.merch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:3.5rem}
-.merch-card{background:var(--card);aspect-ratio:3/4;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.merch-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 45%,#1c1005 0%,var(--card) 100%)}
-.merch-card::after{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(200,144,42,.025) 20px,rgba(200,144,42,.025) 21px)}
-.merch-card-body{position:relative;z-index:1;text-align:center;padding:2rem}
-.merch-card-label{font-family:var(--font-m);font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:block}
-.merch-card-title{font-family:var(--font-d);font-size:1.8rem;font-weight:300;line-height:1.1;color:var(--cream);margin-bottom:.8rem}
-.merch-card-soon{font-family:var(--font-m);font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);border:1px solid var(--border);padding:.3rem .8rem;display:inline-block}
-.merch-corner{position:absolute;bottom:0;right:0;width:48px;height:48px;border-top:1px solid var(--border);border-left:1px solid var(--border)}
-.merch-notify{margin-top:2.5rem;text-align:center}
-.merch-notify p{font-family:var(--font-d);font-style:italic;color:var(--muted);margin-bottom:1.2rem;font-size:1rem}
-.merch-btn{font-family:var(--font-m);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:.8rem 2.2rem;border:1px solid var(--border);color:var(--muted);background:none;cursor:pointer;transition:all .25s;text-decoration:none;display:inline-block}
-.merch-btn:hover{border-color:var(--gold);color:var(--gold)}
+/* ── BEATMAKERS ── */
+#beatmakers .bm-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border)}
+.bm-card{background:var(--card);padding:1.5rem 1.2rem;text-align:center;transition:background .2s}
+.bm-card:hover{background:var(--sand)}
+.bm-av{width:48px;height:48px;border-radius:50%;background:var(--sand);border:1px solid var(--border);margin:0 auto .7rem;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.2rem;color:var(--gold)}
+.bm-name{font-family:var(--fd);font-size:1.05rem;font-weight:300;margin-bottom:.2rem}
+.bm-style{font-family:var(--fm);font-size:.47rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:.6rem}
+.bm-lks{display:flex;gap:.3rem;justify-content:center}
+.bm-lk{font-family:var(--fm);font-size:.45rem;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid var(--border);color:var(--dim);text-decoration:none;transition:all .2s}
+.bm-lk:hover{border-color:var(--gold);color:var(--gold)}
 
-/* ── INNER CIRCLE CTA ── */
-#inner-cta{background:linear-gradient(160deg,#0f0b05 0%,#1a1006 50%,#0a0806 100%);text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:6rem 3rem}
-.ic-eyebrow{font-family:var(--font-m);font-size:.57rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.8rem}
-.ic-eyebrow::before,.ic-eyebrow::after{content:'';width:20px;height:1px;background:rgba(200,144,42,.5)}
-.ic-title{font-family:var(--font-d);font-size:clamp(3rem,6vw,6rem);font-weight:300;line-height:.88;margin-bottom:.5rem}
-.ic-title em{font-style:italic;color:var(--gold-l);display:block}
-.ic-sub{font-family:var(--font-d);font-style:italic;color:var(--muted);font-size:1.05rem;margin-bottom:2.5rem}
-.ic-tiers{display:flex;gap:1px;background:var(--border);max-width:460px;margin:0 auto 2.5rem}
-.ic-tier{flex:1;background:var(--deep);padding:1.2rem;text-align:left}
-.ic-tier-name{font-family:var(--font-d);font-size:1.3rem;font-weight:300;margin-bottom:.3rem}
-.ic-tier-price{font-family:var(--font-m);font-size:.52rem;letter-spacing:.1em;color:var(--gold)}
-.ic-btn{font-family:var(--font-m);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:.95rem 3rem;background:var(--gold);color:var(--black);text-decoration:none;display:inline-block;font-weight:500;transition:background .25s}
-.ic-btn:hover{background:var(--gold-l)}
+/* ── CONTACT / DEMANDE ── */
+#contact.ink .cont-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.cont-form-title{font-family:var(--fm);font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(168,120,48,.7);margin-bottom:1.5rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem}
+.f-group{margin-bottom:.8rem}
+.f-label{font-family:var(--fm);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,237,216,.35);display:block;margin-bottom:.35rem}
+.f-input,.f-select,.f-textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--iv);padding:.72rem 1rem;font-family:var(--fb);font-size:.85rem;font-weight:300;outline:none;transition:border-color .2s}
+.f-input:focus,.f-select:focus,.f-textarea:focus{border-color:rgba(168,120,48,.4)}
+.f-input::placeholder,.f-textarea::placeholder{color:rgba(245,237,216,.2)}
+.f-select{cursor:pointer;appearance:none;color:var(--iv)}
+.f-select option{background:var(--ink);color:var(--iv)}
+.f-textarea{resize:vertical;min-height:100px;line-height:1.6}
+.f-checkbox-row{display:flex;align-items:flex-start;gap:.8rem;margin-bottom:1.2rem}
+.f-checkbox-row input[type=checkbox]{width:14px;height:14px;accent-color:var(--gold);flex-shrink:0;margin-top:.15rem}
+.f-check-label{font-size:.78rem;color:rgba(245,237,216,.4);line-height:1.6}
+.f-check-label b{color:rgba(168,120,48,.8);font-weight:400}
+.f-submit{font-family:var(--fm);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:.85rem 2rem;background:var(--gold);color:var(--ink);border:none;cursor:pointer;transition:background .2s}
+.f-submit:hover{background:var(--gold-l)}
+.f-note{font-family:var(--fm);font-size:.52rem;letter-spacing:.08em;color:rgba(245,237,216,.2);margin-top:.8rem;line-height:1.6}
+.cont-info{}
+.cont-info-block{margin-bottom:2rem}
+.cont-info-label{font-family:var(--fm);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(168,120,48,.6);margin-bottom:.5rem}
+.cont-info-val{font-family:var(--fd);font-size:1.2rem;font-weight:300;color:var(--iv)}
+.cont-info-val a{color:var(--iv);text-decoration:none;border-bottom:1px solid rgba(245,237,216,.12);transition:border-color .2s}
+.cont-info-val a:hover{border-color:rgba(168,120,48,.5)}
+.cont-social{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:2rem}
+.csoc{font-family:var(--fm);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:.45rem 1rem;border:1px solid rgba(255,255,255,.08);color:rgba(245,237,216,.4);text-decoration:none;transition:all .2s}
+.csoc:hover{border-color:rgba(168,120,48,.35);color:rgba(201,150,60,.8)}
+/* Form success */
+.form-success{display:none;text-align:center;padding:2rem;border:1px solid rgba(57,176,112,.2);background:rgba(57,176,112,.04)}
+.form-success.show{display:block}
+.form-success-icon{font-size:2rem;margin-bottom:.8rem}
+.form-success-title{font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--iv);margin-bottom:.4rem}
+.form-success-sub{font-size:.82rem;color:rgba(245,237,216,.45);line-height:1.7;max-width:380px;margin:0 auto}
 
-/* ── FOOTER ── */
-footer{background:var(--black);padding:5rem 3rem 2.5rem;border-top:1px solid var(--border)}
-.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:4rem;margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid var(--border)}
-.footer-brand-name{font-family:var(--font-d);font-size:1.5rem;font-weight:400;letter-spacing:.08em;margin-bottom:.8rem;display:block}
-.footer-brand-name em{color:var(--gold);font-style:italic}
-.footer-brand-desc{font-size:.82rem;color:var(--dim);line-height:1.9;max-width:220px;font-weight:300}
-.footer-col-title{font-family:var(--font-m);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:1.4rem}
-.footer-list{list-style:none;display:flex;flex-direction:column;gap:.7rem}
-.footer-list a{font-size:.83rem;color:var(--dim);text-decoration:none;transition:color .2s;font-weight:300}
-.footer-list a:hover{color:var(--cream)}
-.footer-contact-email{font-family:var(--font-m);font-size:.72rem;letter-spacing:.06em;color:var(--gold);text-decoration:none;display:block;margin-bottom:.4rem}
-.footer-contact-email:hover{color:var(--gold-l)}
-.footer-contact-sub{font-size:.78rem;color:var(--dim);font-style:italic}
-.footer-bottom{display:flex;align-items:center;justify-content:space-between;font-family:var(--font-m);font-size:.53rem;letter-spacing:.12em;color:var(--dim);flex-wrap:wrap;gap:1rem}
-.footer-legal{display:flex;gap:2rem}
-.footer-legal a{color:var(--dim);text-decoration:none;transition:color .2s}
-.footer-legal a:hover{color:var(--muted)}
+/* FOOTER */
+footer{background:#080604;border-top:1px solid rgba(255,255,255,.04);padding:2.5rem 3rem}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.footer-logo{font-family:var(--fd);font-size:1.1rem;color:rgba(245,237,216,.35)}
+.footer-logo em{color:rgba(168,120,48,.5);font-style:italic}
+.footer-links{display:flex;gap:1.8rem;flex-wrap:wrap}
+.footer-links a{font-family:var(--fm);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,237,216,.22);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:rgba(168,120,48,.65)}
+.footer-legal{font-family:var(--fm);font-size:.46rem;letter-spacing:.08em;color:rgba(245,237,216,.15)}
 
-/* ── ANIMATIONS ── */
-@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+/* ANIMS */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes march{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}55%{transform:translateX(-50%) translateY(7px)}}
-
-/* ── RESPONSIVE ── */
-@media(max-width:960px){
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:900px){
   nav{padding:1.2rem 1.5rem}
   .nav-links,.nav-cta{display:none}
   .burger{display:flex}
-  section{padding:5rem 1.5rem}
-  #inner-cta{padding:5rem 1.5rem}
-  .artist-layout{grid-template-columns:1fr;gap:3rem}
-  .releases-grid{grid-template-columns:1fr 1fr}
-  .plat-grid{grid-template-columns:1fr}
-  .merch-grid{grid-template-columns:1fr 1fr}
-  .footer-grid{grid-template-columns:1fr;gap:2.5rem}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .footer-legal{justify-content:center}
-}
-@media(max-width:600px){
-  h1.hero-title{font-size:clamp(3.5rem,15vw,6rem)}
-  .releases-grid,.merch-grid{grid-template-columns:1fr}
-  .plat-col{padding:1.5rem}
-  .ic-tiers{flex-direction:column}
+  .sec{padding:5rem 1.5rem}
+  #hero{padding:6rem 1.5rem 4rem}
+  .hero-photo{display:none}
+  #label .label-inner,#studio .studio-inner,#contact .cont-inner{grid-template-columns:1fr}
+  .studio-vis{display:none}
+  #pack .pack-grid,#beatmakers .bm-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .label-photos{grid-template-columns:1fr 1fr}
+  .label-photo:first-child{grid-row:auto;aspect-ratio:3/4}
 }
 </style>
 </head>
 <body>
 <div class="cur" id="cur"></div>
 
-<!-- ══ NAV ══ -->
+<!-- NAV -->
 <nav id="nav">
-  <a href="#hero" class="nav-logo">AKE <em>Records</em></a>
+  <a href="/" class="nav-logo">AKE <em>Records</em></a>
   <ul class="nav-links">
-    <li><a href="#hero">Label</a></li>
-    <li><a href="#artiste">Artiste</a></li>
-    <li><a href="#plateformes">Streaming</a></li>
-    <li><a href="#merch">Merch</a></li>
-    <li><a href="#footer">Contact</a></li>
-    <li><a href="studio.html">Studio</a></li>
+    <li><a href="#label">Label</a></li>
+    <li><a href="#studio">Studio</a></li>
+    <li><a href="#beatmakers">Beatmakers</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="ake_inner_circle.html" class="nav-cta">Inner Circle</a>
-  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a href="#studio" class="nav-cta">Réserver</a>
+  <button class="burger" onclick="toggleMob()"><span></span><span></span><span></span></button>
 </nav>
 <div class="mob-nav" id="mobNav">
-  <a href="#hero" onclick="closeMob()">Label</a>
-  <a href="#artiste" onclick="closeMob()">Artiste</a>
-  <a href="#plateformes" onclick="closeMob()">Streaming</a>
-  <a href="#merch" onclick="closeMob()">Merch</a>
-  <a href="#footer" onclick="closeMob()">Contact</a>
-  <a href="studio.html" onclick="closeMob()">Studio</a>
-  <a href="ake_inner_circle.html" class="mob-cta">Inner Circle</a>
+  <a href="#label" onclick="closeMob()">Label</a>
+  <a href="#studio" onclick="closeMob()">Studio</a>
+  <a href="#beatmakers" onclick="closeMob()">Beatmakers</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <a href="studio.html" class="mob-cta" onclick="closeMob()">Réserver</a>
 </div>
 
-<!-- ══ HERO ══ -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Paris · Label Indépendant · Depuis 2024</div>
-    <h1 class="hero-title">AKE<br><em>Records</em></h1>
-    <p class="hero-intro">Un son charnel, mélodique et habité.<br>Label indépendant parisien — R&amp;B, Trap, Soul.</p>
-    <div class="hero-links">
-      <a href="#" class="hero-link primary">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        Instagram
-      </a>
-      <a href="#" class="hero-link">
-        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a href="#" class="hero-link">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-        Playlist du label
-      </a>
+  <div class="hero-photo" id="heroPhoto">
+    <div class="hero-photo-placeholder">
+      <div class="ph-icon">📷</div>
+      <div class="ph-text">Photo label<br>→ photos/hero_label.jpg</div>
     </div>
   </div>
-  <div class="scroll-hint">Scroll</div>
+  <div class="hero-content">
+    <div class="hero-tag">Label indépendant · Paris · 2026</div>
+    <h1>AKE<br><em>Records</em></h1>
+    <p class="hero-sub">R&B · Trap · Soul<br>Label &amp; studio d'enregistrement · Paris</p>
+    <div class="hero-actions">
+      <a href="studio.html" class="btn-fill">Réserver le studio</a>
+      <a href="#contact" class="btn-line">Nous contacter</a>
+    </div>
+  </div>
 </section>
 
-<!-- ══ MARQUEE ══ -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span class="marquee-item">AKE Records <b>◆</b></span>
-    <span class="marquee-item">Sourire <b>◆</b></span>
-    <span class="marquee-item">AKE feat. Azam <b>◆</b></span>
-    <span class="marquee-item">Paris · Indépendant <b>◆</b></span>
-    <span class="marquee-item">Couma <b>◆</b></span>
-    <span class="marquee-item">R&amp;B · Trap · Soul <b>◆</b></span>
-    <span class="marquee-item">AKE Records <b>◆</b></span>
-    <span class="marquee-item">Sourire <b>◆</b></span>
-    <span class="marquee-item">AKE feat. Azam <b>◆</b></span>
-    <span class="marquee-item">Paris · Indépendant <b>◆</b></span>
-    <span class="marquee-item">Couma <b>◆</b></span>
-    <span class="marquee-item">R&amp;B · Trap · Soul <b>◆</b></span>
+<!-- MARQUEE -->
+<div class="mq-wrap">
+  <div class="mq-track">
+    <span class="mq-item">Label indépendant <b>◆</b></span>
+    <span class="mq-item">Paris <b>◆</b></span>
+    <span class="mq-item">Studio 24h/24 <b>◆</b></span>
+    <span class="mq-item">R&B · Trap · Soul <b>◆</b></span>
+    <span class="mq-item">AKE Records <b>◆</b></span>
+    <span class="mq-item">Fondé en 2026 <b>◆</b></span>
+    <span class="mq-item">Label indépendant <b>◆</b></span>
+    <span class="mq-item">Paris <b>◆</b></span>
+    <span class="mq-item">Studio 24h/24 <b>◆</b></span>
+    <span class="mq-item">R&B · Trap · Soul <b>◆</b></span>
+    <span class="mq-item">AKE Records <b>◆</b></span>
+    <span class="mq-item">Fondé en 2026 <b>◆</b></span>
   </div>
 </div>
 
-<!-- ══ ARTISTE ══ -->
-<section id="artiste">
-  <div class="s-eyebrow reveal">Artiste du label</div>
-  <h2 class="s-title reveal">AKE</h2>
-  <p class="s-sub reveal">Paris</p>
-
-  <div class="artist-layout">
-    <div class="artist-visual reveal">
-      <div class="artist-frame">
-        <div class="artist-frame-inner"></div>
-        <div class="artist-frame-name">AKE</div>
-        <div class="artist-label-tag">AKE Records</div>
-        <div class="artist-caption">
-          <div class="artist-caption-name">AKE</div>
-          <div class="artist-caption-role">Artiste · Paris</div>
+<!-- LABEL PRÉSENTATION -->
+<section class="sec" id="label">
+  <div class="label-inner">
+    <div class="label-text">
+      <div class="s-tag reveal">01 — Le label</div>
+      <h2 class="s-h reveal">Un label construit<br><em>autrement</em></h2>
+      <div class="label-body reveal">
+        <p>AKE Records est un label indépendant parisien fondé en 2026 autour d'un projet artistique singulier — R&B, Trap, Soul — avec une vision cohérente du son et de l'image.</p>
+        <p>Pas une structure de façade. Un vrai outil de production, de distribution et de développement artistique, construit par des gens du milieu pour des artistes qui méritent mieux que les routes traditionnelles.</p>
+        <p>Autour de l'artiste AKE, le label réunit une communauté de beatmakers, de créatifs et de collaborateurs qui partagent la même exigence.</p>
+      </div>
+      <div class="label-pillars reveal">
+        <div class="lp">
+          <div class="lp-icon">🎤</div>
+          <div class="lp-title">Production artistique</div>
+          <div class="lp-desc">Direction artistique, enregistrement, mix et master en interne.</div>
+        </div>
+        <div class="lp">
+          <div class="lp-icon">📡</div>
+          <div class="lp-title">Distribution</div>
+          <div class="lp-desc">Présence sur toutes les plateformes, pitching éditorial.</div>
+        </div>
+        <div class="lp">
+          <div class="lp-icon">🎚️</div>
+          <div class="lp-title">Studio</div>
+          <div class="lp-desc">Espace d'enregistrement ouvert 24h/24 à Paris.</div>
+        </div>
+        <div class="lp">
+          <div class="lp-icon">🤝</div>
+          <div class="lp-title">Développement</div>
+          <div class="lp-desc">Booking, sync, partenariats, image de marque.</div>
         </div>
       </div>
     </div>
-    <div class="artist-text">
-      <blockquote class="artist-quote reveal">"Un son qui vient du ventre,<br>construit dans l'ombre."</blockquote>
-      <p class="artist-bio reveal">AKE est un artiste R&amp;B trap basé à Paris. Son univers mélange des mélodies habitées, une écriture directe et une prod cinematique. Chaque projet est un bout de réel mis en musique.</p>
-      <div class="artist-socials reveal">
-        <a href="#" class="artist-social">
-          <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          Spotify
-        </a>
-        <a href="#" class="artist-social">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          Instagram
-        </a>
-        <a href="#" class="artist-social">
-          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.79 1.53V6.78a4.85 4.85 0 01-1.02-.09z"/></svg>
-          TikTok
-        </a>
-        <a href="#" class="artist-social">
-          <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-          YouTube
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- SORTIES -->
-  <div class="releases-header reveal">
-    <span class="releases-label">Discographie</span>
-  </div>
-  <div class="releases-grid">
-    <div class="release reveal">
-      <div class="release-art">
-        <div class="release-art-bg" style="background:radial-gradient(ellipse at 40% 40%,#2a1408 0%,#0e0d0c 100%)"></div>
-        <div class="release-art-letter">S</div>
-        <div class="release-num">01</div>
-        <div class="release-badge">Single</div>
-      </div>
-      <div class="release-body">
-        <div class="release-title">Sourire</div>
-        <div class="release-feat">feat. Azam · 2025</div>
-        <div class="release-stream">
-          <a href="#" class="stream-btn"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>Spotify</a>
-          <a href="#" class="stream-btn">Deezer</a>
-          <a href="#" class="stream-btn">Apple</a>
-          <a href="#" class="stream-btn"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>Clip</a>
+    <!-- Photos du label — ajouter dans dossier photos/ -->
+    <div class="label-photos reveal">
+      <div class="label-photo">
+        <img src="photos/label_1.jpg" alt="AKE Records" onerror="this.style.display='none'">
+        <div class="label-photo-placeholder">
+          <div class="ph-icon">📷</div>
+          <div class="ph-text">Photo label<br>photos/label_1.jpg</div>
         </div>
       </div>
-    </div>
-
-    <div class="release reveal">
-      <div class="release-art">
-        <div class="release-art-bg" style="background:radial-gradient(ellipse at 50% 60%,#0e1520 0%,#0e0d0c 100%)"></div>
-        <div class="release-art-letter">C</div>
-        <div class="release-num">03</div>
-        <div class="release-badge">Single</div>
+      <div class="label-photo">
+        <img src="photos/label_2.jpg" alt="AKE Records studio" onerror="this.style.display='none'">
+        <div class="label-photo-placeholder">
+          <div class="ph-icon">📷</div>
+          <div class="ph-text">Photo studio<br>photos/label_2.jpg</div>
+        </div>
       </div>
-      <div class="release-body">
-        <div class="release-title">Couma</div>
-        <div class="release-feat">AKE · 2024</div>
-        <div class="release-stream">
-          <a href="#" class="stream-btn">Spotify</a>
-          <a href="#" class="stream-btn">Deezer</a>
-          <a href="#" class="stream-btn">Apple</a>
+      <div class="label-photo">
+        <img src="photos/label_3.jpg" alt="AKE Records" onerror="this.style.display='none'">
+        <div class="label-photo-placeholder">
+          <div class="ph-icon">📷</div>
+          <div class="ph-text">Photo artist<br>photos/label_3.jpg</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ PLATEFORMES ══ -->
-<section id="plateformes">
-  <div class="s-eyebrow reveal">Écouter</div>
-  <h2 class="s-title reveal">Streaming &amp; <em>Réseaux</em></h2>
-  <p class="s-sub reveal">Retrouve AKE sur toutes les plateformes</p>
-  <div class="plat-grid reveal">
-    <div class="plat-col">
-      <div class="plat-col-title">Streaming</div>
-      <div class="plat-list">
-        <a href="#" class="plat-link">
-          <div class="plat-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          </div>
-          <div><div class="plat-name">Spotify</div><div class="plat-handle">Écouter sur Spotify</div></div>
-          <span class="plat-arrow">→</span>
-        </a>
-        <a href="#" class="plat-link">
-          <div class="plat-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 19.2c-3.978 0-7.2-3.222-7.2-7.2S8.022 4.8 12 4.8s7.2 3.222 7.2 7.2-3.222 7.2-7.2 7.2zm0-11.4c-2.319 0-4.2 1.881-4.2 4.2s1.881 4.2 4.2 4.2 4.2-1.881 4.2-4.2-1.881-4.2-4.2-4.2zm0 5.4c-.662 0-1.2-.538-1.2-1.2s.538-1.2 1.2-1.2 1.2.538 1.2 1.2-.538 1.2-1.2 1.2z"/></svg>
-          </div>
-          <div><div class="plat-name">Deezer</div><div class="plat-handle">Écouter sur Deezer</div></div>
-          <span class="plat-arrow">→</span>
-        </a>
-        <a href="#" class="plat-link">
-          <div class="plat-icon">
-            <svg viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.769-.73 8.905 8.905 0 00-1.199-.144c-.252-.018-.504-.033-.756-.042H5.915c-.252.009-.504.024-.756.042a8.905 8.905 0 00-1.199.144 5.022 5.022 0 00-1.769.73C1.069 1.625.324 2.625.007 3.934A9.23 9.23 0 00-.233 6.124c-.018.243-.033.487-.042.73v10.288c.009.243.024.487.042.73.048.743.164 1.48.373 2.18.317 1.31 1.062 2.31 2.18 3.043a5.022 5.022 0 001.769.73c.39.09.792.133 1.199.144.252.009.504.018.756.018h12.16c.252 0 .504-.009.756-.018a8.905 8.905 0 001.199-.144 5.022 5.022 0 001.769-.73c1.118-.733 1.863-1.733 2.18-3.043.21-.7.325-1.437.373-2.18.018-.243.033-.487.042-.73V6.854c-.009-.243-.024-.487-.042-.73zM12 17.5a5.5 5.5 0 110-11 5.5 5.5 0 010 11zm5.75-9.87a1.38 1.38 0 110-2.76 1.38 1.38 0 010 2.76zM12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/></svg>
-          </div>
-          <div><div class="plat-name">Apple Music</div><div class="plat-handle">Écouter sur Apple Music</div></div>
-          <span class="plat-arrow">→</span>
-        </a>
-        <a href="#" class="plat-link">
-          <div class="plat-icon">
-            <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-          </div>
-          <div><div class="plat-name">YouTube</div><div class="plat-handle">Voir les clips</div></div>
-          <span class="plat-arrow">→</span>
-        </a>
-      </div>
-    </div>
-    <div class="plat-col">
-      <div class="plat-col-title">Réseaux sociaux</div>
-      <div class="plat-list">
-        <a href="#" class="plat-link">
-          <div class="plat-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </div>
-          <div><div class="plat-name">Instagram</div><div class="plat-handle">@ake.4real</div></div>
-          <span class="plat-arrow">→</span>
-        </a>
-        <a href="#" class="plat-link">
-          <div class="plat-icon">
-            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.79 1.53V6.78a4.85 4.85 0 01-1.02-.09z"/></svg>
-          </div>
-          <div><div class="plat-name">TikTok</div><div class="plat-handle">@ake.4real</div></div>
-          <span class="plat-arrow">→</span>
-        </a>
-        <a href="#" class="plat-link">
-          <div class="plat-icon">
-            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </div>
-          <div><div class="plat-name">LinkedIn</div><div class="plat-handle">AKE Records</div></div>
-          <span class="plat-arrow">→</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ MERCH ══ -->
-<section id="merch">
-  <div class="s-eyebrow reveal">Collection</div>
-  <h2 class="s-title reveal">Merch <em>AKE</em></h2>
-  <p class="s-sub reveal">Bientôt disponible</p>
-  <div class="merch-grid">
-    <div class="merch-card reveal">
-      <div class="merch-card-body">
-        <span class="merch-card-label">Collection 01</span>
-        <div class="merch-card-title">T-Shirt<br>AKE Records</div>
-        <span class="merch-card-soon">Coming soon</span>
-      </div>
-      <div class="merch-corner"></div>
-    </div>
-    <div class="merch-card reveal">
-      <div class="merch-card-body">
-        <span class="merch-card-label">Collection 01</span>
-        <div class="merch-card-title">Hoodie<br>Sourire</div>
-        <span class="merch-card-soon">Coming soon</span>
-      </div>
-      <div class="merch-corner"></div>
-    </div>
-    <div class="merch-card reveal">
-      <div class="merch-card-body">
-        <span class="merch-card-label">Collection 01</span>
-        <div class="merch-card-title">Casquette<br>AKE</div>
-        <span class="merch-card-soon">Coming soon</span>
-      </div>
-      <div class="merch-corner"></div>
-    </div>
-  </div>
-  <div class="merch-notify reveal">
-    <p>Sois le premier informé du lancement</p>
-    <a href="ake_inner_circle.html" class="merch-btn">Rejoindre l'Inner Circle</a>
-  </div>
-</section>
-
-<!-- ══ INNER CIRCLE CTA ══ -->
-
-<!-- ══ STUDIO CTA ══ -->
-<section id="studio-cta" style="background:var(--deep,#141210);padding:6rem 3rem;text-align:center;border-top:1px solid rgba(212,149,32,.12)">
-  <div style="max-width:580px;margin:0 auto">
-    <div style="font-family:var(--font-m,'DM Mono',monospace);font-size:.57rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold,#d49520);margin-bottom:1.5rem" class="reveal">Studio AKE Records · Paris</div>
-    <h2 style="font-family:var(--font-d,'Cormorant Garamond',serif);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:.95;margin-bottom:1rem" class="reveal">Session<br><em style="color:#f0b535;font-style:italic">studio</em></h2>
-    <p style="font-family:var(--font-d,'Cormorant Garamond',serif);font-style:italic;color:var(--muted,#8a7a68);font-size:1rem;margin-bottom:.8rem;line-height:1.8;max-width:420px;margin-left:auto;margin-right:auto" class="reveal">Titre complet — enregistrement, pré-mix, prémastérisation et direction artistique inclus.</p>
-    <div style="font-family:var(--font-m,'DM Mono',monospace);font-size:.62rem;letter-spacing:.15em;color:var(--gold,#d49520);margin-bottom:2.5rem" class="reveal">Pack Bienvenu · 100€ · Disponible 24h/24</div>
-    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap" class="reveal">
-      <a href="studio.html" style="font-family:var(--font-m,'DM Mono',monospace);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;padding:.9rem 2.2rem;background:var(--gold,#d49520);color:#0c0a08;text-decoration:none;border:none;font-weight:500;transition:background .25s;display:inline-block">Réserver une session</a>
-      <a href="ake_inner_circle.html" style="font-family:var(--font-m,'DM Mono',monospace);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;padding:.9rem 2.2rem;background:transparent;color:var(--cream,#f5eedd);text-decoration:none;border:1px solid rgba(212,149,32,.25);transition:all .25s;display:inline-block">Inner Circle →</a>
-    </div>
-  </div>
-</section>
-
-<section id="inner-cta">
-  <div class="ic-eyebrow reveal">Accès exclusif</div>
-  <h2 class="ic-title reveal">Inner<br><em>Circle</em></h2>
-  <p class="ic-sub reveal">Extraits privés, démos, participation au projet</p>
-  <div class="ic-tiers reveal">
-    <div class="ic-tier">
-      <div class="ic-tier-name">Cercle</div>
-      <div class="ic-tier-price">Gratuit</div>
-    </div>
-    <div class="ic-tier" style="border-left:1px solid var(--border)">
-      <div class="ic-tier-name">Studio</div>
-      <div class="ic-tier-price">Dès 2€ / mois</div>
-    </div>
-  </div>
-  <a href="ake_inner_circle.html" class="ic-btn reveal">Rejoindre l'Inner Circle</a>
-</section>
-
-<!-- ══ FOOTER ══ -->
-<footer id="footer">
-  <div class="footer-grid">
+<!-- STUDIO -->
+<section class="sec sand" id="studio">
+  <div class="studio-inner">
     <div>
-      <span class="footer-brand-name">AKE <em>Records</em></span>
-      <p class="footer-brand-desc">Label indépendant parisien. R&amp;B, Trap, Soul. Fondé en 2024.</p>
+      <div class="s-tag reveal">02 — Studio</div>
+      <h2 class="s-h reveal">Le <em>studio</em></h2>
+      <p class="s-p reveal">Ouvert 24h/24, 7j/7. Enregistrement, direction artistique, pré-mix et prémastérisation inclus dans chaque session.</p>
+      <div class="studio-rules reveal">
+        <div class="srule"><div class="srule-icon">⚡</div><div><div class="srule-head">Session standard</div><div class="srule-desc">Dès 12h à l'avance · 24h/24 · 7j/7</div></div></div>
+        <div class="srule"><div class="srule-icon">🎚️</div><div><div class="srule-head">Avec beatmaker</div><div class="srule-desc">Minimum 4 jours à l'avance</div></div></div>
+        <div class="srule"><div class="srule-icon">📦</div><div><div class="srule-head">Pack Bienvenu — 1ère réservation</div><div class="srule-desc">100€ · Titre complet · Pré-mix · Prémastérisation · D.A</div></div></div>
+      </div>
+      <a href="studio.html" class="btn-fill reveal">Réserver une session →</a>
     </div>
-    <div>
-      <div class="footer-col-title">Navigation</div>
-      <ul class="footer-list">
-        <li><a href="#hero">Label</a></li>
-        <li><a href="#artiste">Artiste</a></li>
-        <li><a href="#plateformes">Streaming</a></li>
-        <li><a href="#merch">Merch</a></li>
-        <li><a href="studio.html">Studio</a></li>
-        <li><a href="ake_inner_circle.html">Inner Circle</a></li>
+    <div class="studio-vis reveal">
+      <div class="sv-bg"></div>
+      <div class="sv-grid"></div>
+      <div class="sv-photo"></div>
+      <div class="sv-word">STUDIO</div>
+      <div class="sv-badge">
+        <div class="svb-open"><span class="svb-dot"></span>Studio ouvert</div>
+        <div class="svb-title">AKE Records Studio</div>
+        <div class="svb-price">Pack Bienvenu · 100€ · 1ère réservation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACK / TARIFS -->
+<section class="sec" id="pack">
+  <div style="margin-bottom:2.5rem">
+    <div class="s-tag reveal">03 — Tarifs</div>
+    <h2 class="s-h reveal">Ce qu'on construit <em>ensemble</em></h2>
+  </div>
+  <div class="pack-grid reveal">
+    <div class="pack-card">
+      <div class="pack-num">01</div>
+      <div class="pack-icon">🎤</div>
+      <div class="pack-name">Pack Bienvenu</div>
+      <div class="pack-price">100€ · Titre unique</div>
+      <ul class="pack-feats">
+        <li>Enregistrement complet du titre</li>
+        <li>Pré-mix (correction, dynamique)</li>
+        <li>Prémastérisation</li>
+        <li>Direction artistique incluse</li>
+        <li>Fichiers sources livrés</li>
+      </ul>
+      <span class="pack-badge">✓ 1ère réservation uniquement</span>
+    </div>
+    <div class="pack-card">
+      <div class="pack-num">02</div>
+      <div class="pack-icon">🎛️</div>
+      <div class="pack-name">Prod catalogue</div>
+      <div class="pack-price">100€ · Avec contrat</div>
+      <ul class="pack-feats">
+        <li>Beat existant du catalogue</li>
+        <li>Droits d'exploitation inclus</li>
+        <li>Contrat signé</li>
+        <li>Combinable avec session studio</li>
       </ul>
     </div>
-    <div>
-      <div class="footer-col-title">Contact</div>
-      <a href="mailto:management@akerecords.fr" class="footer-contact-email">management@akerecords.fr</a>
-      <p class="footer-contact-sub">Booking, presse, collaborations</p>
+    <div class="pack-card">
+      <div class="pack-num">03</div>
+      <div class="pack-icon">✨</div>
+      <div class="pack-name">Prod sur mesure</div>
+      <div class="pack-price">250€ · Exclusivité totale</div>
+      <ul class="pack-feats">
+        <li>Beat créé spécifiquement pour toi</li>
+        <li>Exclusivité complète</li>
+        <li>Contrat signé</li>
+        <li>4 jours minimum à l'avance</li>
+      </ul>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2025 AKE Records — Tous droits réservés</span>
-    <div class="footer-legal">
-      <a href="#mentions">Mentions légales</a>
-      <a href="#confidentialite">Confidentialité</a>
+</section>
+
+<!-- BEATMAKERS -->
+<section class="sec sand" id="beatmakers">
+  <div style="margin-bottom:2.2rem">
+    <div class="s-tag reveal">04 — L'équipe</div>
+    <h2 class="s-h reveal">Les <em>beatmakers</em></h2>
+  </div>
+  <div class="bm-grid reveal">
+    <div class="bm-card"><div class="bm-av">G</div><div class="bm-name">Greed</div><div class="bm-style">Trap · R&B · Hard</div><div class="bm-lks"><a href="#" class="bm-lk">Insta</a><a href="#" class="bm-lk">Prods</a></div></div>
+    <div class="bm-card"><div class="bm-av">M</div><div class="bm-name">Medusa</div><div class="bm-style">Afro · Melodic Trap</div><div class="bm-lks"><a href="#" class="bm-lk">Insta</a><a href="#" class="bm-lk">Prods</a></div></div>
+    <div class="bm-card"><div class="bm-av">M</div><div class="bm-name">Milo</div><div class="bm-style">Soul · R&B · Lo-Fi</div><div class="bm-lks"><a href="#" class="bm-lk">Insta</a><a href="#" class="bm-lk">Prods</a></div></div>
+    <div class="bm-card"><div class="bm-av">C</div><div class="bm-name">Coookup</div><div class="bm-style">Drill · Cloud · Trap</div><div class="bm-lks"><a href="#" class="bm-lk">Insta</a><a href="#" class="bm-lk">Prods</a></div></div>
+    <div class="bm-card"><div class="bm-av">L</div><div class="bm-name">LjBeats</div><div class="bm-style">Trap · Boom Bap</div><div class="bm-lks"><a href="#" class="bm-lk">Insta</a><a href="#" class="bm-lk">Prods</a></div></div>
+  </div>
+</section>
+
+<!-- CONTACT / DEMANDE PRESSE -->
+<section class="sec ink" id="contact">
+  <div class="cont-inner">
+    <div>
+      <div class="s-tag reveal">05 — Contact</div>
+      <h2 class="s-h reveal">Travaillons<br><em>ensemble</em></h2>
+      <p class="s-p reveal">Toutes les demandes — presse, booking, sync, partenariats, collaborations — sont traitées dans les 48h.</p>
+      <div class="cont-info reveal" style="margin-top:2.5rem">
+        <div class="cont-info-block">
+          <div class="cont-info-label">Email</div>
+          <div class="cont-info-val"><a href="mailto:management@akerecords.fr">management@akerecords.fr</a></div>
+        </div>
+        <div class="cont-info-block">
+          <div class="cont-info-label">Réseaux</div>
+          <div class="cont-social">
+            <a href="https://instagram.com/ake.4real" target="_blank" class="csoc">Instagram</a>
+            <a href="https://tiktok.com/@ake.4real" target="_blank" class="csoc">TikTok</a>
+            <a href="https://open.spotify.com/artist/5kVxODSxrF1NkLHZRVlf7g" target="_blank" class="csoc">Spotify</a>
+            <a href="https://linkedin.com" target="_blank" class="csoc">LinkedIn</a>
+          </div>
+        </div>
+        <div class="cont-info-block" style="margin-top:1.5rem;padding:1.2rem;border:1px solid rgba(168,120,48,.18);background:rgba(168,120,48,.04)">
+          <div class="cont-info-label" style="margin-bottom:.6rem">Press kit</div>
+          <div style="font-size:.82rem;color:rgba(245,237,216,.4);line-height:1.7">Le dossier de presse est transmis sur demande, après validation par l'équipe. Remplis le formulaire ci-contre en précisant ta demande.</div>
+        </div>
+      </div>
     </div>
+    <div>
+      <div class="cont-form-title">Envoyer une demande</div>
+      <form id="contactForm" netlify name="contact-akerecords" method="POST">
+        <input type="hidden" name="form-name" value="contact-akerecords">
+        <div class="form-row">
+          <div class="f-group">
+            <label class="f-label">Prénom *</label>
+            <input type="text" class="f-input" name="prenom" placeholder="Ton prénom" required>
+          </div>
+          <div class="f-group">
+            <label class="f-label">Nom *</label>
+            <input type="text" class="f-input" name="nom" placeholder="Ton nom" required>
+          </div>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Email *</label>
+          <input type="email" class="f-input" name="email" placeholder="ton@email.com" required>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Structure / Média</label>
+          <input type="text" class="f-input" name="structure" placeholder="Label, média, agence…">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Type de demande *</label>
+          <select class="f-select" name="type" required>
+            <option value="">Sélectionner…</option>
+            <option>Presse / Interview</option>
+            <option>Booking / Show</option>
+            <option>Collaboration artistique</option>
+            <option>Sync / Placement</option>
+            <option>Partenariat</option>
+            <option>Radio / Podcast</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Message *</label>
+          <textarea class="f-textarea" name="message" placeholder="Décris ton projet, ta demande…" required></textarea>
+        </div>
+        <div class="f-checkbox-row">
+          <input type="checkbox" id="pkRequest" name="presskit_request">
+          <label class="f-check-label" for="pkRequest">Je souhaite recevoir le <b>dossier de presse</b> si ma demande est validée</label>
+        </div>
+        <button type="submit" class="f-submit">Envoyer la demande →</button>
+        <div class="f-note">Les informations saisies sont traitées par l'équipe AKE Records uniquement.</div>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">✓</div>
+        <div class="form-success-title">Demande envoyée</div>
+        <p class="form-success-sub">L'équipe AKE Records a bien reçu ta demande et te répondra dans les 48h. Si tu as coché la case press kit et que ta demande est validée, tu recevras un lien d'accès par email.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PROCHAINEMENT -->
+<section id="prochainement" style="background:var(--sand);padding:7rem 3rem;border-top:1px solid var(--border)">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:3.5rem">
+      <div class="s-tag reveal" style="justify-content:center">Prochainement</div>
+      <h2 class="s-h reveal" style="text-align:center">Ce qui <em>arrive</em></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--border)" class="reveal">
+      <div style="background:var(--card);padding:2.2rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent)"></div>
+        <div style="font-size:1.8rem;margin-bottom:1rem">🎬</div>
+        <div style="font-family:var(--fm);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Documentaire</div>
+        <div style="font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--ink);margin-bottom:.2rem">Séminaire</div>
+        <div style="font-family:var(--fd);font-style:italic;font-size:1.1rem;color:var(--gold);margin-bottom:.8rem">Épisode 1</div>
+        <p style="font-size:.8rem;color:var(--wood);line-height:1.75;margin-bottom:1.4rem">Le documentaire du séminaire AKE Records. Marseille 2024. Bientôt disponible.</p>
+        <a href="#" id="linkSeminaire" style="font-family:var(--fm);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:.7rem 1.4rem;border:1px solid rgba(139,103,64,.25);color:rgba(139,103,64,.45);text-decoration:none;display:inline-block;cursor:not-allowed">Bientôt disponible</a>
+      </div>
+      <div style="background:var(--card);padding:2.2rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)"></div>
+        <div style="font-size:1.8rem;margin-bottom:1rem">👕</div>
+        <div style="font-family:var(--fm);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Collection</div>
+        <div style="font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--ink);margin-bottom:.2rem">SummerCamp</div>
+        <div style="font-family:var(--fd);font-style:italic;font-size:1.1rem;color:var(--gold);margin-bottom:.8rem">Été 2026</div>
+        <p style="font-size:.8rem;color:var(--wood);line-height:1.75;margin-bottom:1.4rem">La première collection AKE Records. Pièces limitées.</p>
+        <a href="#" id="linkMerch" style="font-family:var(--fm);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:.7rem 1.4rem;border:1px solid rgba(139,103,64,.25);color:rgba(139,103,64,.45);text-decoration:none;display:inline-block;cursor:not-allowed">Bientôt disponible</a>
+      </div>
+      <div style="background:var(--card);padding:2.2rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold))"></div>
+        <div style="font-size:1.8rem;margin-bottom:1rem">🎙️</div>
+        <div style="font-family:var(--fm);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem">Studio</div>
+        <div style="font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--ink);margin-bottom:.2rem">Réservation</div>
+        <div style="font-family:var(--fd);font-style:italic;font-size:1.1rem;color:var(--gold);margin-bottom:.8rem">En ligne</div>
+        <p style="font-size:.8rem;color:var(--wood);line-height:1.75;margin-bottom:1.4rem">Pack Bienvenu 100€. Ouvert 24h/24. Réservation disponible maintenant.</p>
+        <a href="studio.html" style="font-family:var(--fm);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:.7rem 1.4rem;background:var(--gold);color:var(--iv);text-decoration:none;display:inline-block;transition:all .2s">Réserver →</a>
+      </div>
+    </div>
+    <p style="text-align:center;font-family:var(--fm);font-size:.52rem;letter-spacing:.14em;color:var(--dim);margin-top:2rem">Les liens seront activés lors du lancement officiel</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">AKE <em>Records</em></div>
+    <div class="footer-links">
+      <a href="studio.html">Studio</a>
+      <a href="#contact">Contact</a>
+      <a href="mentions.html">Mentions légales</a>
+    </div>
+    <div class="footer-legal">© 2026 AKE Records (SAS) · Tous droits réservés</div>
   </div>
 </footer>
 
 <script>
-// CURSOR
-const cur = document.getElementById('cur');
-document.addEventListener('mousemove', e => { cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px'; });
-document.querySelectorAll('a,button').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.classList.add('big'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
+document.querySelectorAll('a,button,.bm-card,.pack-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
 });
-
-// NAV SCROLL
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50));
-
-// MOBILE NAV
-const burger = document.getElementById('burger'), mob = document.getElementById('mobNav');
-burger.addEventListener('click', () => { mob.classList.add('open'); });
-function closeMob() { mob.classList.remove('open'); }
-mob.addEventListener('click', e => { if (e.target === mob) closeMob(); });
-
-// SCROLL REVEAL
-const obs = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 60);
-      obs.unobserve(e.target);
-    }
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('on',window.scrollY>60));
+function toggleMob(){document.getElementById('mobNav').classList.toggle('open')}
+function closeMob(){document.getElementById('mobNav').classList.remove('open')}
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+// Hero photo load
+const hp=document.getElementById('heroPhoto');
+const img=new Image();
+img.onload=()=>hp.classList.add('loaded');
+img.src='photos/hero_label.jpg';
+// Netlify form
+const form=document.getElementById('contactForm');
+if(form){
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const btn=form.querySelector('.f-submit');
+    btn.textContent='Envoi…';btn.disabled=true;
+    try{
+      await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form))});
+      form.style.display='none';
+      document.getElementById('formSuccess').classList.add('show');
+    }catch{btn.textContent='Erreur — réessaie';btn.disabled=false}
   });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}
 </script>
 </body>
 </html>
-

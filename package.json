@@ -1,0 +1,8 @@
+{
+  "name": "akerecords-site",
+  "version": "1.0.0",
+  "description": "AKE Records - akerecords.fr",
+  "dependencies": {
+    "stripe": "^16.0.0"
+  }
+}

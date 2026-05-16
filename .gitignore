@@ -1,0 +1,24 @@
+# Fichiers lourds exclus de git
+# Audio bruts
+audio/**/*.wav
+audio/**/*.aiff
+audio/**/*.m4a
+audio/**/*.aif
+
+# Videos
+videos/**/*.mp4
+videos/**/*.mov
+
+# Systeme
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*_b64.txt
+*.log
+
+# Anciens scripts de migration (garder PUSH.bat uniquement)
+migrer_depuis_*.bat
+git_setup_et_push.bat
+PUSH_GITHUB.bat
+git_push.bat

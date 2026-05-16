@@ -1,68 +1,110 @@
-// netlify/functions/create-payment-intent.js
-// ⚠️ Déployer sur Netlify avec la variable d'env STRIPE_SECRET_KEY
+// AKE Records — Stripe Payment Function
+// Deploiement : Netlify Functions
+// Variable requise dans Netlify : STRIPE_SECRET_KEY
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Content-Type': 'application/json'
-};
+const ALLOWED_ORIGINS = [
+  'https://akerecords.fr',
+  'https://www.akerecords.fr',
+];
 
 exports.handler = async (event) => {
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
-  if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+  const origin = event.headers?.origin || '';
+  const isAllowed = ALLOWED_ORIGINS.includes(origin) || origin.includes('netlify.app');
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': isAllowed ? origin : ALLOWED_ORIGINS[0],
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+  }
 
   let body;
-  try { body = JSON.parse(event.body); }
-  catch { return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
+  try {
+    body = JSON.parse(event.body);
+  } catch {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON' }) };
+  }
 
-  const { paymentMethodId, paymentIntentId, email, name, paymentMode, bookingDetails } = body;
-  if (!email || !name) return { statusCode: 400, headers, body: JSON.stringify({ error: 'Champs requis manquants' }) };
+  const { paymentMethodId, email, name, paymentMode, bookingDetails } = body;
+
+  if (!paymentMethodId || !email || !name) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Champs requis manquants' }) };
+  }
 
   try {
+    let customer;
     const existing = await stripe.customers.list({ email, limit: 1 });
-    const customer = existing.data[0] || await stripe.customers.create({ email, name });
+    if (existing.data.length > 0) {
+      customer = existing.data[0];
+    } else {
+      customer = await stripe.customers.create({
+        email,
+        name,
+        metadata: { source: 'akerecords.fr' },
+      });
+    }
+
+    const isFirstBooking = !customer.metadata?.hasBooking;
 
     if (paymentMode === 'onsite') {
-      await stripe.paymentMethods.attach(paymentMethodId, { customer: customer.id });
-      await stripe.customers.update(customer.id, { invoice_settings: { default_payment_method: paymentMethodId } });
-      return { statusCode: 200, headers, body: JSON.stringify({ success: true, isOnsite: true, isFirstBooking: true }) };
+      const setupIntent = await stripe.setupIntents.create({
+        customer: customer.id,
+        payment_method: paymentMethodId,
+        confirm: true,
+        usage: 'off_session',
+        metadata: {
+          booking_date: bookingDetails?.date || '',
+          booking_slot: bookingDetails?.slot || '',
+          beatmaker: bookingDetails?.beatmaker || '',
+          genre: bookingDetails?.genre || '',
+          type: 'onsite_imprint',
+        },
+      });
+      await stripe.customers.update(customer.id, { metadata: { hasBooking: 'true' } });
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, mode: 'onsite', setupIntentId: setupIntent.id, isFirstBooking }) };
     }
-
-    if (paymentIntentId) {
-      const pi = await stripe.paymentIntents.confirm(paymentIntentId);
-      if (pi.status === 'succeeded') return { statusCode: 200, headers, body: JSON.stringify({ success: true, isFirstBooking: true }) };
-      return { statusCode: 400, headers, body: JSON.stringify({ error: 'Confirmation échouée après 3DS' }) };
-    }
-
-    const pastIntents = await stripe.paymentIntents.list({ customer: customer.id, limit: 20 });
-    const isFirstBooking = !pastIntents.data.some(pi => pi.status === 'succeeded' && pi.metadata?.type === 'studio_booking');
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 10000, currency: 'eur',
-      customer: customer.id, payment_method: paymentMethodId,
-      confirm: true, return_url: 'https://akerecords.fr/studio.html?success=true',
-      description: isFirstBooking ? 'AKE Records — Pack Bienvenu Studio' : 'AKE Records — Session Studio',
-      metadata: { type: 'studio_booking', client_name: name, client_email: email,
-        booking_date: bookingDetails?.date||'', booking_slot: bookingDetails?.slot||'',
-        booking_beatmaker: bookingDetails?.beatmaker||'', is_first_booking: String(isFirstBooking) }
+      amount: 10000,
+      currency: 'eur',
+      customer: customer.id,
+      payment_method: paymentMethodId,
+      confirm: true,
+      return_url: 'https://akerecords.fr/studio.html',
+      receipt_email: email,
+      description: 'AKE Records - Pack Bienvenu Studio - ' + (bookingDetails?.date || ''),
+      metadata: {
+        customer_name: name,
+        customer_email: email,
+        booking_date: bookingDetails?.date || '',
+        booking_slot: bookingDetails?.slot || '',
+        beatmaker: bookingDetails?.beatmaker || '',
+        genre: bookingDetails?.genre || '',
+        is_first_booking: isFirstBooking ? 'oui' : 'non',
+      },
     });
 
     if (paymentIntent.status === 'requires_action') {
-      return { statusCode: 200, headers, body: JSON.stringify({
-        requiresAction: true, paymentIntentId: paymentIntent.id,
-        clientSecret: paymentIntent.client_secret, isFirstBooking
-      })};
+      return { statusCode: 200, headers, body: JSON.stringify({ requiresAction: true, clientSecret: paymentIntent.client_secret, isFirstBooking }) };
     }
-    if (paymentIntent.status === 'requires_payment_method') {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: 'Carte refusée. Essaie avec une autre carte.' }) };
+    if (paymentIntent.status !== 'succeeded') {
+      return { statusCode: 400, headers, body: JSON.stringify({ error: 'Paiement refuse' }) };
     }
-    return { statusCode: 200, headers, body: JSON.stringify({ success: true, isFirstBooking, paymentIntentId: paymentIntent.id }) };
+
+    await stripe.customers.update(customer.id, { metadata: { hasBooking: 'true' } });
+    return { statusCode: 200, headers, body: JSON.stringify({ success: true, mode: 'online', paymentIntentId: paymentIntent.id, isFirstBooking }) };
 
   } catch (err) {
-    console.error('Stripe error:', err.message);
-    return { statusCode: 400, headers, body: JSON.stringify({ error: err.message || 'Erreur de paiement' }) };
+    console.error('Stripe error:', err);
+    return { statusCode: 400, headers, body: JSON.stringify({ error: err.message || 'Erreur Stripe' }) };
   }
 };

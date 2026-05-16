@@ -2,6 +2,9 @@
   "name": "akerecords-site",
   "version": "1.0.0",
   "description": "AKE Records - akerecords.fr",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "stripe": "^16.0.0"
   }

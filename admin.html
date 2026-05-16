@@ -3,472 +3,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AKE Records — Back Office</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Admin — AKE Records</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0A0908;--card:#141210;--card2:#1C1810;--border:rgba(212,149,32,.15);
-  --gold:#D49520;--gold-l:#F0B535;--cream:#F5EDD8;--muted:#8A7A58;--dim:#4A3D28;
-  --green:#39b070;--red:#e05050;--orange:#e09020;
-  --fb:'Outfit',sans-serif;--fm:'DM Mono',monospace;
-}
-html,body{min-height:100vh;background:var(--bg);color:var(--cream);font-family:var(--fb)}
-
-/* ── AUTH ── */
-#authScreen{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem}
-.auth-logo{font-size:2rem;font-weight:300;color:var(--gold);letter-spacing:.2em;font-family:var(--fm)}
-.auth-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;display:block}
-.auth-input{background:var(--card);border:1px solid var(--border);color:var(--cream);padding:.75rem 1.2rem;font-family:var(--fb);font-size:.9rem;outline:none;width:280px;transition:border-color .2s}
-.auth-input:focus{border-color:var(--gold)}
-.auth-btn{width:280px;background:var(--gold);color:var(--bg);border:none;padding:.85rem;font-family:var(--fm);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .2s}
-.auth-btn:hover{background:var(--gold-l)}
-.auth-err{font-family:var(--fm);font-size:.58rem;color:var(--red);display:none}
-
-/* ── LAYOUT ── */
-#app{display:none}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--card);border-right:1px solid var(--border);padding:1.5rem;display:flex;flex-direction:column;gap:.3rem;z-index:100}
-.sidebar-logo{font-family:var(--fm);font-size:.8rem;color:var(--gold);letter-spacing:.14em;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
-.sidebar-logo span{display:block;font-size:.5rem;color:var(--muted);margin-top:.2rem;letter-spacing:.2em}
-.nav-item{font-family:var(--fm);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.7rem .8rem;color:var(--muted);cursor:pointer;border:1px solid transparent;border-radius:0;transition:all .2s;display:flex;align-items:center;gap:.6rem;text-decoration:none}
-.nav-item:hover{color:var(--cream);border-color:var(--border)}
-.nav-item.active{color:var(--gold);border-color:var(--border);background:var(--card2)}
-.nav-badge{font-size:.45rem;padding:.15rem .4rem;background:var(--red);color:white;border-radius:2px}
-.sidebar-footer{margin-top:auto;font-family:var(--fm);font-size:.5rem;color:var(--dim)}
-.main{margin-left:220px;padding:2.5rem;min-height:100vh}
-.page{display:none}
-.page.active{display:block}
-.page-title{font-family:var(--fm);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
-.page-sub{font-size:.85rem;color:var(--muted);margin-bottom:2rem}
-
-/* ── CARDS ── */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1px;background:var(--border);margin-bottom:2.5rem}
-.stat-card{background:var(--card);padding:1.5rem}
-.stat-val{font-family:var(--fm);font-size:1.8rem;color:var(--gold);margin-bottom:.3rem}
-.stat-label{font-family:var(--fm);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.stat-delta{font-family:var(--fm);font-size:.52rem;color:var(--green);margin-top:.2rem}
-
-/* ── TABLE ── */
-.table-wrap{background:var(--card);border:1px solid var(--border);overflow:hidden}
+:root{--iv:#F6F5ED;--sand:#EAE0CC;--card:#FFFFFF;--gold:#A87830;--gold-l:#C9963C;--ink:#0C1218;--wood:#5E4A2E;--dim:#B8A880;--border:rgba(139,103,64,.18);--red:#C0392B;--green:#27AE60;--fd:'Cormorant Garamond',Georgia,serif;--fb:'Outfit',sans-serif;--fm:'DM Mono',monospace;}
+html{background:var(--iv);min-height:100vh}body{font-family:var(--fb);color:var(--ink);background:var(--iv);margin:0}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-card{background:var(--card);border:1px solid var(--border);padding:3rem;width:100%;max-width:380px;text-align:center}
+.login-logo{font-family:var(--fd);font-size:1.6rem;color:var(--ink);margin-bottom:.25rem}.login-logo em{color:var(--gold);font-style:italic}
+.login-sub{font-family:var(--fm);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:2.5rem}
+.lf-label{font-family:var(--fm);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--wood);display:block;text-align:left;margin-bottom:.35rem;margin-top:1.2rem}
+.lf-input{width:100%;background:var(--iv);border:1px solid var(--border);color:var(--ink);padding:.75rem 1rem;font-family:var(--fb);font-size:.9rem;outline:none;transition:border-color .2s}
+.lf-input:focus{border-color:var(--gold)}
+.login-btn{width:100%;margin-top:1.8rem;font-family:var(--fm);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;padding:.9rem;background:var(--gold);color:#FFF;border:none;cursor:pointer;transition:background .2s}.login-btn:hover{background:var(--gold-l)}
+.login-err{font-family:var(--fm);font-size:.58rem;color:var(--red);margin-top:.8rem;display:none}.login-err.show{display:block}
+.shell{display:none;min-height:100vh}.shell.active{display:flex}
+aside{width:220px;background:var(--ink);flex-shrink:0;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
+.aside-logo{padding:1.8rem 1.5rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.aside-logo-text{font-family:var(--fd);font-size:1.1rem;color:#FFF}.aside-logo-text em{color:var(--gold);font-style:italic}
+.aside-tag{font-family:var(--fm);font-size:.46rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:.2rem}
+nav.aside-nav{padding:1.2rem 0;flex:1;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:.7rem;padding:.7rem 1.5rem;font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);cursor:pointer;transition:all .2s;border-left:2px solid transparent;text-decoration:none}
+.nav-item:hover{color:#FFF;background:rgba(255,255,255,.04)}.nav-item.active{color:var(--gold);background:rgba(168,120,48,.08);border-left-color:var(--gold)}
+.nav-icon{font-size:.85rem;flex-shrink:0;width:16px;text-align:center}
+.aside-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08)}
+.logout-btn{font-family:var(--fm);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);background:none;border:none;cursor:pointer;transition:color .2s}.logout-btn:hover{color:rgba(255,255,255,.7)}
+main.content{margin-left:220px;flex:1;padding:2.5rem;min-height:100vh}
+.page{display:none}.page.active{display:block}
+.page-title{font-family:var(--fd);font-size:2rem;font-weight:300;color:var(--ink);margin-bottom:.3rem}
+.page-sub{font-family:var(--fm);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:2rem}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.stat-card{background:var(--card);border:1px solid var(--border);padding:1.5rem}
+.stat-val{font-family:var(--fd);font-size:2.4rem;font-weight:300;color:var(--gold);line-height:1}
+.stat-label{font-family:var(--fm);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:.4rem}
+.stat-delta{font-family:var(--fm);font-size:.54rem;color:var(--green);margin-top:.3rem}
+.table-wrap{background:var(--card);border:1px solid var(--border);overflow:hidden;margin-bottom:2rem}
 .table-header{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--border)}
-.table-title{font-family:var(--fm);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream)}
-.table-actions{display:flex;gap:.5rem}
-.t-btn{font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:.38rem .9rem;border:1px solid var(--border);color:var(--muted);background:none;cursor:pointer;transition:all .2s}
-.t-btn:hover{border-color:var(--gold);color:var(--gold)}
-.t-btn.primary{background:var(--gold);color:var(--bg);border-color:var(--gold)}
-.t-btn.primary:hover{background:var(--gold-l)}
+.table-title{font-family:var(--fm);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.table-actions{display:flex;gap:.6rem}
+.tact-btn{font-family:var(--fm);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1rem;border:1px solid var(--border);color:var(--wood);background:none;cursor:pointer;transition:all .2s}.tact-btn:hover{border-color:var(--gold);color:var(--gold)}.tact-btn.primary{background:var(--gold);color:#FFF;border-color:var(--gold)}
+.filter-bar{display:flex;gap:.6rem;padding:.9rem 1.5rem;border-bottom:1px solid var(--border);background:var(--iv);flex-wrap:wrap}
+.filter-select,.filter-input{font-family:var(--fm);font-size:.54rem;padding:.4rem .8rem;border:1px solid var(--border);background:var(--card);color:var(--wood);outline:none}
+.filter-input{color:var(--ink);flex:1;min-width:160px}.filter-input::placeholder{color:var(--dim)}
 table{width:100%;border-collapse:collapse}
-th{font-family:var(--fm);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:.8rem 1.2rem;text-align:left;border-bottom:1px solid var(--border)}
-td{font-size:.82rem;color:var(--cream);padding:.85rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(255,255,255,.02)}
-.status-badge{font-family:var(--fm);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .6rem;border:1px solid}
-.status-badge.pending{color:var(--orange);border-color:rgba(224,144,32,.3);background:rgba(224,144,32,.06)}
-.status-badge.confirmed{color:var(--green);border-color:rgba(57,176,112,.3);background:rgba(57,176,112,.06)}
-.status-badge.paid{color:var(--gold);border-color:rgba(212,149,32,.3);background:rgba(212,149,32,.06)}
-.status-badge.cancelled{color:var(--red);border-color:rgba(224,80,80,.3);background:rgba(224,80,80,.06)}
-.status-badge.onsite{color:var(--muted);border-color:var(--dim);background:rgba(255,255,255,.03)}
-.action-btn{font-family:var(--fm);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .6rem;border:1px solid var(--border);color:var(--muted);background:none;cursor:pointer;transition:all .2s;margin-right:.3rem}
-.action-btn:hover{border-color:var(--gold);color:var(--gold)}
-.action-btn.danger:hover{border-color:var(--red);color:var(--red)}
-
-/* ── CALENDAR ── */
-.cal-grid-admin{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:2rem}
-.cal-cell{background:var(--card);padding:.6rem;min-height:60px;position:relative}
-.cal-cell.has-booking{background:var(--card2);border-left:2px solid var(--gold)}
-.cal-cell-day{font-family:var(--fm);font-size:.55rem;color:var(--muted);margin-bottom:.3rem}
-.cal-booking-dot{font-size:.68rem;color:var(--cream);font-family:var(--fm);cursor:pointer}
-.cal-booking-dot:hover{color:var(--gold)}
-
-/* ── SETTINGS ── */
-.setting-row{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--border)}
-.setting-row:last-child{border-bottom:none}
-.setting-label{font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream)}
-.setting-desc{font-size:.78rem;color:var(--muted);margin-top:.2rem}
-.toggle{width:38px;height:20px;background:var(--dim);border-radius:10px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
-.toggle.on{background:var(--gold)}
-.toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:white;top:3px;left:3px;transition:left .2s}
-.toggle.on::after{left:21px}
-.s-input{background:var(--card);border:1px solid var(--border);color:var(--cream);padding:.5rem .8rem;font-family:var(--fb);font-size:.82rem;outline:none;width:260px}
-.s-input:focus{border-color:var(--gold)}
-.s-save{font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:.42rem 1rem;background:var(--gold);color:var(--bg);border:none;cursor:pointer;margin-left:.5rem}
-
-/* MODAL DETAIL */
-.detail-modal{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;display:none;align-items:center;justify-content:center;padding:1.5rem}
-.detail-modal.open{display:flex}
-.detail-box{background:var(--card);border:1px solid var(--border);width:100%;max-width:500px;padding:2rem;position:relative}
-.detail-close{position:absolute;top:.8rem;right:1rem;background:none;border:none;color:var(--muted);font-family:var(--fm);font-size:.62rem;cursor:pointer}
-.detail-row{display:flex;gap:.8rem;margin-bottom:.8rem;font-size:.84rem}
-.detail-key{font-family:var(--fm);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);flex-shrink:0;width:90px;margin-top:.15rem}
-.detail-val{color:var(--cream)}
+th{font-family:var(--fm);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:.7rem 1rem;text-align:left;background:var(--iv);border-bottom:1px solid var(--border)}
+td{padding:.85rem 1rem;border-bottom:1px solid var(--border);font-size:.82rem;vertical-align:middle}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(246,245,237,.6)}
+.badge{font-family:var(--fm);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem}
+.badge-online{background:rgba(39,174,96,.1);color:var(--green);border:1px solid rgba(39,174,96,.3)}
+.badge-onsite{background:rgba(168,120,48,.1);color:var(--gold);border:1px solid rgba(168,120,48,.3)}
+.row-actions{display:flex;gap:.4rem}
+.ra-btn{font-family:var(--fm);font-size:.48rem;letter-spacing:.08em;padding:.25rem .6rem;border:1px solid var(--border);background:none;cursor:pointer;color:var(--wood);transition:all .2s;text-transform:uppercase}.ra-btn:hover{border-color:var(--gold);color:var(--gold)}.ra-btn.danger:hover{border-color:var(--red);color:var(--red)}
+.empty-state{padding:3rem;text-align:center;color:var(--dim);font-family:var(--fm);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase}
+.info-panel{background:var(--card);border:1px solid var(--border);padding:1.8rem;margin-bottom:1.5rem}
+.ip-title{font-family:var(--fm);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.ip-row{display:flex;align-items:flex-start;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--border);gap:1rem}
+.ip-row:last-of-type{border-bottom:none}
+.ip-key{font-family:var(--fm);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);flex-shrink:0;min-width:160px}
+.ip-val{font-family:var(--fm);font-size:.56rem;color:var(--ink);text-align:right}
+.ip-val.ok{color:var(--green)}.ip-val.warn{color:#E67E22}.ip-val.err{color:var(--red)}
+.ip-steps{margin-top:.5rem}
+.ip-step{display:flex;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}.ip-step:last-child{border:none;margin:0;padding:0}
+.ip-num{font-family:var(--fd);font-size:1.8rem;font-weight:300;color:var(--gold);line-height:1;flex-shrink:0;width:28px}
+.ip-step-title{font-family:var(--fm);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin-bottom:.3rem}
+.ip-step-desc{font-size:.8rem;color:var(--wood);line-height:1.6}
+.ip-code{font-family:var(--fm);font-size:.6rem;background:var(--iv);border:1px solid var(--border);padding:.3rem .65rem;color:var(--gold);display:inline-block;margin-top:.3rem}
+.action-btn{font-family:var(--fm);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;padding:.55rem 1.2rem;border:none;cursor:pointer;transition:opacity .2s}
+.action-btn:hover{opacity:.85}
+.action-btn.gold{background:var(--gold);color:#FFF}.action-btn.dark{background:var(--ink);color:#FFF}.action-btn.wood{background:var(--wood);color:#FFF}
+.btn-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(12,18,24,.7);z-index:200;align-items:center;justify-content:center;padding:2rem}.modal-overlay.show{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:1.5rem;border-bottom:1px solid var(--border)}
+.modal-title{font-family:var(--fd);font-size:1.4rem;font-weight:300;color:var(--ink)}
+.modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--dim)}
+.modal-body{padding:1.5rem}
+.detail-row{display:flex;align-items:flex-start;gap:1rem;padding:.65rem 0;border-bottom:1px solid var(--border)}.detail-row:last-child{border:none}
+.detail-key{font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);width:130px;flex-shrink:0}.detail-val{font-size:.85rem;color:var(--ink)}
+.modal-actions{display:flex;gap:.6rem;padding:1.2rem 1.5rem;border-top:1px solid var(--border)}
+.modal-btn{flex:1;font-family:var(--fm);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;padding:.65rem;border:1px solid var(--border);background:none;cursor:pointer;color:var(--wood);transition:all .2s}.modal-btn:hover{border-color:var(--gold);color:var(--gold)}.modal-btn.primary{background:var(--gold);color:#FFF;border-color:var(--gold)}.modal-btn.danger{border-color:rgba(192,57,43,.3);color:var(--red)}.modal-btn.danger:hover{background:var(--red);color:#FFF;border-color:var(--red)}
+.notif{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--ink);color:#FFF;font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;padding:1rem 1.5rem;transform:translateY(120%);transition:transform .3s;z-index:300;max-width:300px}.notif.show{transform:translateY(0)}
+@media(max-width:768px){aside{width:100%;height:auto;position:static}.aside-logo{display:none}nav.aside-nav{display:flex;flex-direction:row;padding:.5rem;overflow-x:auto}.nav-item{flex-direction:column;gap:.2rem;font-size:.44rem;padding:.5rem .7rem;border-left:none;border-bottom:2px solid transparent;white-space:nowrap}.nav-item.active{border-bottom-color:var(--gold);border-left:none}.aside-footer{display:none}.shell.active{flex-direction:column}main.content{margin-left:0;padding:1.2rem}.stats-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-
-<!-- AUTH -->
-<div id="authScreen">
-  <div class="auth-logo">AKE</div>
-  <div style="font-family:var(--fm);font-size:.56rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;margin-bottom:1rem">Back Office · Management</div>
-  <div>
-    <label class="auth-label">Mot de passe</label>
-    <input type="password" class="auth-input" id="authPwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')doAuth()">
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <div class="login-logo">AKE <em>Records</em></div>
+    <div class="login-sub">Back-office — Acces restreint</div>
+    <label class="lf-label">Mot de passe</label>
+    <input type="password" class="lf-input" id="pwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()">
+    <button class="login-btn" onclick="login()">Acceder</button>
+    <div class="login-err" id="loginErr">Mot de passe incorrect</div>
   </div>
-  <button class="auth-btn" onclick="doAuth()">Accéder</button>
-  <div class="auth-err" id="authErr">Mot de passe incorrect</div>
-  <div style="font-family:var(--fm);font-size:.48rem;color:var(--dim);margin-top:.5rem">Accès réservé à l'équipe AKE Records</div>
 </div>
-
-<!-- APP -->
-<div id="app">
-  <div class="sidebar">
-    <div class="sidebar-logo">AKE Records<span>Back Office · Management</span></div>
-    <a class="nav-item active" onclick="showPage('dashboard')">📊 Dashboard</a>
-    <a class="nav-item" onclick="showPage('reservations')">📅 Réservations <span class="nav-badge" id="pendingBadge">0</span></a>
-    <a class="nav-item" onclick="showPage('planning')">🗓 Planning studio</a>
-    <a class="nav-item" onclick="showPage('paiements')">💳 Paiements</a>
-    <a class="nav-item" onclick="showPage('contact')">✉️ Demandes contact</a>
-    <a class="nav-item" onclick="showPage('settings')">⚙️ Paramètres</a>
-    <div class="sidebar-footer">
-      <div>management@akerecords.fr</div>
-      <div style="margin-top:.3rem;cursor:pointer;color:var(--muted)" onclick="logout()">← Déconnexion</div>
-    </div>
-  </div>
-
-  <div class="main">
-    <!-- DASHBOARD -->
-    <div class="page active" id="pg-dashboard">
+<div class="shell" id="shell">
+  <aside>
+    <div class="aside-logo"><div class="aside-logo-text">AKE <em>Records</em></div><div class="aside-tag">Back-office v2</div></div>
+    <nav class="aside-nav">
+      <a class="nav-item active" onclick="showPage('dashboard',this);return false" href="#"><span class="nav-icon">◈</span>Dashboard</a>
+      <a class="nav-item" onclick="showPage('reservations',this);return false" href="#"><span class="nav-icon">◷</span>Reservations</a>
+      <a class="nav-item" onclick="showPage('stripe',this);return false" href="#"><span class="nav-icon">◎</span>Stripe</a>
+      <a class="nav-item" onclick="showPage('emails',this);return false" href="#"><span class="nav-icon">◻</span>Emails</a>
+      <a class="nav-item" onclick="showPage('deploy',this);return false" href="#"><span class="nav-icon">▷</span>Deploy</a>
+      <a class="nav-item" onclick="showPage('settings',this);return false" href="#"><span class="nav-icon">◱</span>Parametres</a>
+    </nav>
+    <div class="aside-footer"><button class="logout-btn" onclick="logout()">Deconnexion</button></div>
+  </aside>
+  <main class="content">
+    <div class="page active" id="page-dashboard">
       <div class="page-title">Dashboard</div>
-      <div class="page-sub">Vue d'ensemble — AKE Records Studio</div>
-      <div class="stats-grid" id="statsGrid"></div>
-      <div class="table-wrap">
-        <div class="table-header">
-          <div class="table-title">Réservations récentes</div>
-          <button class="t-btn primary" onclick="showPage('reservations')">Voir tout →</button>
-        </div>
-        <table id="dashTable"><tbody></tbody></table>
-      </div>
-    </div>
-
-    <!-- RÉSERVATIONS -->
-    <div class="page" id="pg-reservations">
-      <div class="page-title">Réservations</div>
-      <div class="page-sub">Gestion des sessions studio</div>
-      <div class="table-wrap">
-        <div class="table-header">
-          <div class="table-title">Toutes les réservations</div>
-          <div class="table-actions">
-            <select id="filterStatus" onchange="renderReservations()" style="background:var(--card2);border:1px solid var(--border);color:var(--muted);padding:.38rem .7rem;font-family:var(--fm);font-size:.52rem;cursor:pointer;outline:none">
-              <option value="">Tous</option>
-              <option value="pending">En attente</option>
-              <option value="confirmed">Confirmé</option>
-              <option value="paid">Payé en ligne</option>
-              <option value="onsite">Paiement sur place</option>
-              <option value="cancelled">Annulé</option>
-            </select>
-            <button class="t-btn" onclick="exportCSV()">⬇ Exporter CSV</button>
-          </div>
-        </div>
-        <table><thead><tr>
-          <th>Nom</th><th>Date</th><th>Créneau</th><th>Beatmaker</th><th>Paiement</th><th>Statut</th><th>Actions</th>
-        </tr></thead><tbody id="reservTable"></tbody></table>
-      </div>
-    </div>
-
-    <!-- PLANNING -->
-    <div class="page" id="pg-planning">
-      <div class="page-title">Planning studio</div>
-      <div class="page-sub">Calendrier des sessions</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
-        <button class="t-btn" onclick="calShift(-1)">‹ Mois précédent</button>
-        <div style="font-family:var(--fm);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream)" id="calLabel"></div>
-        <button class="t-btn" onclick="calShift(1)">Mois suivant ›</button>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:.5rem">
-        <div style="font-family:var(--fm);font-size:.5rem;text-align:center;color:var(--muted);padding:.4rem">Lun</div>
-        <div style="font-family:var(--fm);font-size:.5rem;text-align:center;color:var(--muted);padding:.4rem">Mar</div>
-        <div style="font-family:var(--fm);font-size:.5rem;text-align:center;color:var(--muted);padding:.4rem">Mer</div>
-        <div style="font-family:var(--fm);font-size:.5rem;text-align:center;color:var(--muted);padding:.4rem">Jeu</div>
-        <div style="font-family:var(--fm);font-size:.5rem;text-align:center;color:var(--muted);padding:.4rem">Ven</div>
-        <div style="font-family:var(--fm);font-size:.5rem;text-align:center;color:var(--muted);padding:.4rem">Sam</div>
-        <div style="font-family:var(--fm);font-size:.5rem;text-align:center;color:var(--muted);padding:.4rem">Dim</div>
-      </div>
-      <div class="cal-grid-admin" id="adminCal"></div>
-    </div>
-
-    <!-- PAIEMENTS -->
-    <div class="page" id="pg-paiements">
-      <div class="page-title">Paiements</div>
-      <div class="page-sub">Suivi des transactions studio</div>
-      <div class="stats-grid" id="payStats"></div>
-      <div class="table-wrap">
-        <div class="table-header"><div class="table-title">Historique des paiements</div></div>
-        <table><thead><tr>
-          <th>Référence</th><th>Client</th><th>Montant</th><th>Mode</th><th>Date</th><th>Statut</th>
-        </tr></thead><tbody id="payTable"></tbody></table>
-      </div>
-    </div>
-
-    <!-- CONTACT -->
-    <div class="page" id="pg-contact">
-      <div class="page-title">Demandes contact</div>
-      <div class="page-sub">Formulaires reçus via akerecords.fr</div>
-      <div class="table-wrap">
-        <div class="table-header"><div class="table-title">Demandes</div></div>
-        <table><thead><tr>
-          <th>Nom</th><th>Email</th><th>Type</th><th>Structure</th><th>Press Kit</th><th>Date</th><th>Actions</th>
-        </tr></thead><tbody id="contactTable"></tbody></table>
-      </div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="page" id="pg-settings">
-      <div class="page-title">Paramètres</div>
-      <div class="page-sub">Configuration du studio et des notifications</div>
-      <div class="table-wrap" style="margin-bottom:1.5rem">
-        <div class="table-header"><div class="table-title">Notifications email</div></div>
-        <div class="setting-row">
-          <div><div class="setting-label">Email de réservation</div><div class="setting-desc">Reçois une notification à chaque nouvelle réservation</div></div>
-          <div style="display:flex;align-items:center;gap:.6rem"><input class="s-input" id="notifEmail" value="management@akerecords.fr" style="width:220px"><button class="s-save" onclick="saveNotif()">Sauvegarder</button></div>
-        </div>
-        <div class="setting-row">
-          <div><div class="setting-label">Notification SMS</div><div class="setting-desc">Via Brevo — configurer dans les paramètres Brevo</div></div>
-          <div class="toggle" id="toggleSMS" onclick="toggle('SMS')"></div>
-        </div>
-        <div class="setting-row">
-          <div><div class="setting-label">Confirmation automatique</div><div class="setting-desc">Envoyer un email de confirmation au client dès la réservation</div></div>
-          <div class="toggle on" id="toggleConfirm" onclick="toggle('Confirm')"></div>
-        </div>
-      </div>
-      <div class="table-wrap" style="margin-bottom:1.5rem">
-        <div class="table-header"><div class="table-title">Règles de réservation</div></div>
-        <div class="setting-row">
-          <div><div class="setting-label">Délai standard (heures)</div><div class="setting-desc">Minimum avant une session standard</div></div>
-          <div style="display:flex;align-items:center;gap:.5rem"><input class="s-input" id="delaiStd" value="12" type="number" style="width:80px"><span style="font-family:var(--fm);font-size:.55rem;color:var(--muted)">heures</span></div>
-        </div>
-        <div class="setting-row">
-          <div><div class="setting-label">Délai avec beatmaker (jours)</div><div class="setting-desc">Minimum avec beatmaker</div></div>
-          <div style="display:flex;align-items:center;gap:.5rem"><input class="s-input" id="delaiBm" value="4" type="number" style="width:80px"><span style="font-family:var(--fm);font-size:.55rem;color:var(--muted)">jours</span></div>
-        </div>
+      <div class="page-sub" id="dashDate">—</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-val" id="sTotal">0</div><div class="stat-label">Reservations</div></div>
+        <div class="stat-card"><div class="stat-val" id="sOnline">0</div><div class="stat-label">Paye en ligne</div><div class="stat-delta" id="sRevenu"></div></div>
+        <div class="stat-card"><div class="stat-val" id="sOnsite">0</div><div class="stat-label">Sur place</div></div>
+        <div class="stat-card"><div class="stat-val" id="sRevenue">0€</div><div class="stat-label">Revenus</div></div>
       </div>
       <div class="table-wrap">
-        <div class="table-header"><div class="table-title">Accès &amp; Sécurité</div></div>
-        <div class="setting-row">
-          <div><div class="setting-label">Changer le mot de passe</div></div>
-          <div style="display:flex;gap:.5rem">
-            <input type="password" class="s-input" id="newPwd" placeholder="Nouveau mot de passe" style="width:200px">
-            <button class="s-save" onclick="changePwd()">Modifier</button>
-          </div>
+        <div class="table-header"><div class="table-title">Prochaines sessions</div><button class="tact-btn primary" onclick="showPage('reservations',document.querySelectorAll('.nav-item')[1])">Voir tout</button></div>
+        <table><thead><tr><th>Client</th><th>Date</th><th>Creneau</th><th>Beatmaker</th><th>Paiement</th><th>Action</th></tr></thead><tbody id="dashTbody"><tr><td colspan="6" class="empty-state">Chargement…</td></tr></tbody></table>
+      </div>
+    </div>
+    <div class="page" id="page-reservations">
+      <div class="page-title">Reservations Studio</div>
+      <div class="page-sub">Toutes les sessions</div>
+      <div class="table-wrap">
+        <div class="table-header"><div class="table-title">Liste complète</div><div class="table-actions"><button class="tact-btn" onclick="exportCSV()">Export CSV</button><button class="tact-btn primary" onclick="addManual()">+ Ajouter</button></div></div>
+        <div class="filter-bar">
+          <select class="filter-select" id="filterStatus" onchange="filterTable()"><option value="">Tous</option><option value="online">Paye en ligne</option><option value="onsite">Sur place</option></select>
+          <input class="filter-input" id="filterQ" placeholder="Rechercher…" oninput="filterTable()">
+        </div>
+        <table><thead><tr><th>#</th><th>Client</th><th>Email</th><th>Date</th><th>Creneau</th><th>Beatmaker</th><th>Paiement</th><th>Actions</th></tr></thead><tbody id="resTbody"><tr><td colspan="8" class="empty-state">Aucune reservation</td></tr></tbody></table>
+      </div>
+    </div>
+    <div class="page" id="page-stripe">
+      <div class="page-title">Stripe & Paiements</div>
+      <div class="page-sub">Configuration et verification</div>
+      <div class="info-panel">
+        <div class="ip-title">Statut Stripe</div>
+        <div class="ip-row"><span class="ip-key">Cle publique (PK)</span><span class="ip-val ok">pk_test_51TU0Fj… presente dans studio.html</span></div>
+        <div class="ip-row"><span class="ip-key">Cle secrete (SK)</span><span class="ip-val warn" id="skSt">A configurer dans Netlify env variables</span></div>
+        <div class="ip-row"><span class="ip-key">Fonction Netlify</span><span class="ip-val warn" id="fnSt">Non testee</span></div>
+        <div class="ip-row"><span class="ip-key">Mode actuel</span><span class="ip-val warn">TEST — passer pk_live_ pour production</span></div>
+        <div class="btn-row"><button class="action-btn gold" onclick="testFn()">Tester la fonction</button><button class="action-btn dark" onclick="window.open('https://dashboard.stripe.com','_blank')">Stripe Dashboard</button></div>
+      </div>
+      <div class="info-panel">
+        <div class="ip-title">Activer Stripe en production — 4 etapes</div>
+        <div class="ip-steps">
+          <div class="ip-step"><div class="ip-num">1</div><div><div class="ip-step-title">Activer les paiements Stripe</div><div class="ip-step-desc">dashboard.stripe.com → Activate payments → verifier identite</div></div></div>
+          <div class="ip-step"><div class="ip-num">2</div><div><div class="ip-step-title">Copier la cle secrete SK live</div><div class="ip-step-desc">Developers → API keys → Reveal secret key</div><div class="ip-code">sk_live_…</div></div></div>
+          <div class="ip-step"><div class="ip-num">3</div><div><div class="ip-step-title">Ajouter dans Netlify env variables</div><div class="ip-step-desc">app.netlify.com → Site AKE Records → Site configuration → Environment variables</div><div class="ip-code">STRIPE_SECRET_KEY = sk_live_…</div></div></div>
+          <div class="ip-step"><div class="ip-num">4</div><div><div class="ip-step-title">Passer en mode LIVE dans studio.html</div><div class="ip-step-desc">Remplacer pk_test_ par pk_live_ → PUSH.bat</div></div></div>
         </div>
       </div>
+    </div>
+    <div class="page" id="page-emails">
+      <div class="page-title">Emails & Formulaires</div>
+      <div class="page-sub">Securite et notifications</div>
+      <div class="info-panel">
+        <div class="ip-title">Securite des donnees clients</div>
+        <div class="ip-row"><span class="ip-key">Donnees carte bancaire</span><span class="ip-val ok">Jamais sur ton serveur — Stripe PCI DSS Level 1</span></div>
+        <div class="ip-row"><span class="ip-key">Formulaires Netlify</span><span class="ip-val ok">Chiffres HTTPS — stockes chez Netlify</span></div>
+        <div class="ip-row"><span class="ip-key">Emails clients</span><span class="ip-val ok">Envoyes vers management@akerecords.fr uniquement</span></div>
+        <div class="ip-row"><span class="ip-key">Cookies / tracking</span><span class="ip-val ok">Aucun cookie tiers — zero pub</span></div>
+      </div>
+      <div class="info-panel">
+        <div class="ip-title">Configurer notifications email Netlify (une fois)</div>
+        <div class="ip-steps">
+          <div class="ip-step"><div class="ip-num">1</div><div><div class="ip-step-title">Ouvrir Netlify → Forms</div><div class="ip-step-desc">app.netlify.com → Site AKE Records → Forms → studio-reservation</div></div></div>
+          <div class="ip-step"><div class="ip-num">2</div><div><div class="ip-step-title">Ajouter notification email</div><div class="ip-step-desc">Form notifications → Add notification → Email notification</div><div class="ip-code">management@akerecords.fr</div></div></div>
+          <div class="ip-step"><div class="ip-num">3</div><div><div class="ip-step-title">Objet personnalise</div><div class="ip-code">Nouvelle reservation — {{client_name}}</div></div></div>
+        </div>
+        <div class="btn-row"><button class="action-btn gold" onclick="sendTestEmail()">Envoyer email de test</button></div>
+        <div id="emailRes" style="font-family:var(--fm);font-size:.58rem;color:var(--dim);margin-top:.8rem"></div>
+      </div>
+    </div>
+    <div class="page" id="page-deploy">
+      <div class="page-title">Deploy & GitHub</div>
+      <div class="page-sub">Deploiement automatique</div>
+      <div class="info-panel">
+        <div class="ip-title">Etat des connexions</div>
+        <div class="ip-row"><span class="ip-key">GitHub akerecords</span><span class="ip-val ok">github.com/axake92/akerecords.fr</span></div>
+        <div class="ip-row"><span class="ip-key">GitHub ake4real</span><span class="ip-val ok">github.com/axake92/ake4real.fr</span></div>
+        <div class="ip-row"><span class="ip-key">Deploy auto Netlify</span><span class="ip-val warn">Verifier que les 2 sites sont lies dans Netlify</span></div>
+        <div class="ip-row"><span class="ip-key">Domaine akerecords.fr</span><span class="ip-val warn">A configurer dans Netlify Domain management</span></div>
+        <div class="btn-row"><button class="action-btn gold" onclick="window.open('https://app.netlify.com','_blank')">Netlify</button><button class="action-btn dark" onclick="window.open('https://github.com/axake92','_blank')">GitHub</button></div>
+      </div>
+      <div class="info-panel">
+        <div class="ip-title">Comment mettre a jour un site</div>
+        <div class="ip-steps">
+          <div class="ip-step"><div class="ip-num">1</div><div><div class="ip-step-title">Modifier les fichiers</div><div class="ip-step-desc">Ouvre index.html ou studio.html dans ton editeur et fais les modifs</div></div></div>
+          <div class="ip-step"><div class="ip-num">2</div><div><div class="ip-step-title">Double-clic sur PUSH.bat</div><div class="ip-step-desc">Dans le dossier du site — une fenetre noire apparait puis se ferme</div></div></div>
+          <div class="ip-step"><div class="ip-num">3</div><div><div class="ip-step-title">Netlify deploie en 30 secondes</div><div class="ip-step-desc">Automatique — aucune action supplementaire requise</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="page" id="page-settings">
+      <div class="page-title">Parametres</div>
+      <div class="page-sub">Configuration back-office</div>
+      <div class="info-panel">
+        <div class="ip-title">Changer le mot de passe admin</div>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.8rem">
+          <div style="flex:1;min-width:180px"><div class="ip-key" style="margin-bottom:.4rem">Nouveau</div><input type="password" class="filter-input" id="p1" style="width:100%"></div>
+          <div style="flex:1;min-width:180px"><div class="ip-key" style="margin-bottom:.4rem">Confirmer</div><input type="password" class="filter-input" id="p2" style="width:100%"></div>
+          <div style="align-self:flex-end"><button class="action-btn gold" onclick="changePwd()">Mettre a jour</button></div>
+        </div>
+        <div id="pwdMsg" style="font-family:var(--fm);font-size:.58rem;margin-top:.6rem"></div>
+      </div>
+      <div class="info-panel" style="margin-top:1rem">
+        <div class="ip-title">Acces rapides</div>
+        <div class="btn-row">
+          <button class="action-btn gold" onclick="window.open('https://app.netlify.com','_blank')">Netlify</button>
+          <button class="action-btn dark" onclick="window.open('https://dashboard.stripe.com','_blank')">Stripe</button>
+          <button class="action-btn wood" onclick="window.open('https://github.com/axake92/akerecords.fr','_blank')">GitHub akerecords</button>
+          <button class="action-btn wood" onclick="window.open('https://github.com/axake92/ake4real.fr','_blank')">GitHub ake4real</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title" id="modalTitle">Detail</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeModal()">Fermer</button>
+      <button class="modal-btn primary" onclick="confirmRes()">Confirmer par email</button>
+      <button class="modal-btn danger" onclick="deleteRes()">Annuler session</button>
     </div>
   </div>
 </div>
-
-<!-- DETAIL MODAL -->
-<div class="detail-modal" id="detailModal">
-  <div class="detail-box">
-    <button class="detail-close" onclick="closeDetail()">✕ Fermer</button>
-    <div style="font-family:var(--fm);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem">Détail réservation</div>
-    <div id="detailContent"></div>
-    <div style="margin-top:1.5rem;display:flex;gap:.5rem;flex-wrap:wrap" id="detailActions"></div>
-  </div>
-</div>
-
+<div class="notif" id="notif"></div>
 <script>
-// ── AUTH
-const ADMIN_PWD='AKE2026!'; // Changer dans settings
-let adminPwd=localStorage.getItem('ake_admin_pwd')||ADMIN_PWD;
-function doAuth(){
-  const v=document.getElementById('authPwd').value;
-  if(v===adminPwd){
-    sessionStorage.setItem('ake_admin','1');
-    document.getElementById('authScreen').style.display='none';
-    document.getElementById('app').style.display='block';
-    initApp();
-  }else{document.getElementById('authErr').style.display='block'}
+const KEY_AUTH='akeAdmin_v2',KEY_RES='akeRes_v2',DEFAULT_PWD='AKE2026!';
+let currentId=null;
+function getPwd(){return localStorage.getItem('akePwd')||DEFAULT_PWD;}
+function login(){
+  if(document.getElementById('pwdInput').value===getPwd()){
+    localStorage.setItem(KEY_AUTH,'1');
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('shell').classList.add('active');
+    init();
+  }else{document.getElementById('loginErr').classList.add('show');document.getElementById('pwdInput').value='';document.getElementById('pwdInput').focus();}
 }
-function logout(){sessionStorage.removeItem('ake_admin');location.reload()}
-if(sessionStorage.getItem('ake_admin')==='1'){
-  document.getElementById('authScreen').style.display='none';
-  document.getElementById('app').style.display='block';
-  window.addEventListener('DOMContentLoaded',initApp);
+function logout(){localStorage.removeItem(KEY_AUTH);location.reload();}
+function changePwd(){
+  const p1=document.getElementById('p1').value,p2=document.getElementById('p2').value,el=document.getElementById('pwdMsg');
+  if(p1.length<6){el.textContent='Min 6 caracteres';el.style.color='var(--red)';return;}
+  if(p1!==p2){el.textContent='Mots de passe differents';el.style.color='var(--red)';return;}
+  localStorage.setItem('akePwd',p1);el.textContent='Mis a jour';el.style.color='var(--green)';
+  document.getElementById('p1').value='';document.getElementById('p2').value='';
 }
-
-// ── DATA STORE (localStorage — sera remplacé par API Netlify/Brevo)
-function getBookings(){try{return JSON.parse(localStorage.getItem('ake_bookings')||'[]')}catch{return[]}}
-function saveBookings(b){localStorage.setItem('ake_bookings',JSON.stringify(b))}
-function getContacts(){try{return JSON.parse(localStorage.getItem('ake_contacts')||'[]')}catch{return[]}}
-
-// ── SAMPLE DATA (pour démo — sera remplacé par vraies données)
-function initSampleData(){
-  if(getBookings().length>0)return;
-  const sample=[
-    {id:'BK001',name:'Jean Dupont',email:'jean@email.fr',tel:'+33 6 12 34 56 78',date:'Lundi 12 mai 2026',slot:'18:00',beatmaker:'greed',genre:'R&B',projet:'Premier titre solo',payment:'online',paid:true,amount:100,status:'confirmed',isFirst:true,createdAt:'2026-05-11T10:30:00'},
-    {id:'BK002',name:'Marie Leroy',email:'marie@studio.fr',tel:'+33 7 98 76 54 32',date:'Mardi 13 mai 2026',slot:'14:00',beatmaker:'',genre:'Trap',projet:'EP en cours',payment:'onsite',paid:false,amount:100,status:'pending',isFirst:false,createdAt:'2026-05-11T14:22:00'},
-    {id:'BK003',name:'Lucas Martin',email:'lucas@rap.fr',tel:'',date:'Mercredi 14 mai 2026',slot:'21:00',beatmaker:'milo',genre:'Soul',projet:'Démo album',payment:'online',paid:true,amount:100,status:'paid',isFirst:true,createdAt:'2026-05-10T09:15:00'},
-  ];
-  saveBookings(sample);
+if(localStorage.getItem(KEY_AUTH)==='1'){document.getElementById('loginWrap').style.display='none';document.getElementById('shell').classList.add('active');window.addEventListener('load',init);}
+const DEMO=[
+  {id:'RSV001',name:'Jean-Marc Dupont',email:'jm@example.com',date:'20 Mai 2026',slot:'14h',bm:'Greed',genre:'Trap',pay:'online',amount:100},
+  {id:'RSV002',name:'Aicha Kone',email:'aicha@example.com',date:'22 Mai 2026',slot:'11h',bm:'—',genre:'R&B',pay:'onsite',amount:0},
+  {id:'RSV003',name:'Kevin Martin',email:'kev@example.com',date:'25 Mai 2026',slot:'17h',bm:'Medusa',genre:'Afro',pay:'online',amount:100},
+];
+let res=JSON.parse(localStorage.getItem(KEY_RES)||'null')||DEMO;
+function save(){localStorage.setItem(KEY_RES,JSON.stringify(res));}
+function init(){
+  document.getElementById('dashDate').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  renderStats();renderDash();renderRes(res);
 }
-
-// ── NAV
-function showPage(id){
+function renderStats(){
+  const online=res.filter(r=>r.pay==='online'),rev=online.reduce((s,r)=>s+(r.amount||0),0);
+  document.getElementById('sTotal').textContent=res.length;
+  document.getElementById('sOnline').textContent=online.length;
+  document.getElementById('sOnsite').textContent=res.filter(r=>r.pay==='onsite').length;
+  document.getElementById('sRevenue').textContent=rev+'€';
+  document.getElementById('sRevenu').textContent=rev+'€ encaisses';
+}
+function showPage(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('pg-'+id).classList.add('active');
-  event?.currentTarget?.classList.add('active');
+  document.getElementById('page-'+id).classList.add('active');
+  el?.classList.add('active');
 }
-
-// ── INIT
-function initApp(){
-  initSampleData();
-  renderDashboard();
-  renderReservations();
-  renderPlanning();
-  renderPayments();
-  renderContacts();
-  updatePendingBadge();
+function badge(p){return p==='online'?'<span class="badge badge-online">En ligne</span>':'<span class="badge badge-onsite">Sur place</span>';}
+function renderDash(){
+  const t=document.getElementById('dashTbody');
+  if(!res.length){t.innerHTML='<tr><td colspan="6" class="empty-state">Aucune reservation</td></tr>';return;}
+  t.innerHTML=res.slice(0,5).map(r=>`<tr><td><strong>${r.name}</strong></td><td>${r.date}</td><td>${r.slot}</td><td>${r.bm||'—'}</td><td>${badge(r.pay)}</td><td><button class="ra-btn" onclick="openDetail('${r.id}')">Voir</button></td></tr>`).join('');
 }
-
-function updatePendingBadge(){
-  const n=getBookings().filter(b=>b.status==='pending').length;
-  document.getElementById('pendingBadge').textContent=n;
-  document.getElementById('pendingBadge').style.display=n>0?'inline':'none';
+function renderRes(data){
+  const t=document.getElementById('resTbody');
+  if(!data.length){t.innerHTML='<tr><td colspan="8" class="empty-state">Aucun resultat</td></tr>';return;}
+  t.innerHTML=data.map(r=>`<tr><td style="font-family:var(--fm);font-size:.5rem;color:var(--dim)">${r.id}</td><td><strong>${r.name}</strong></td><td style="font-family:var(--fm);font-size:.56rem">${r.email}</td><td>${r.date}</td><td>${r.slot}</td><td>${r.bm||'—'}</td><td>${badge(r.pay)}</td><td><div class="row-actions"><button class="ra-btn" onclick="openDetail('${r.id}')">Voir</button><button class="ra-btn danger" onclick="delById('${r.id}')">✕</button></div></td></tr>`).join('');
 }
-
-// ── DASHBOARD
-function renderDashboard(){
-  const b=getBookings();
-  const total=b.reduce((s,x)=>x.paid?s+x.amount:s,0);
-  const stats=[
-    {val:b.length,label:'Réservations totales',delta:`+${b.filter(x=>x.status!=='cancelled').length} actives`},
-    {val:b.filter(x=>x.status==='pending').length,label:'En attente',delta:'À confirmer'},
-    {val:'€'+total,label:'Encaissé (en ligne)',delta:'Paiements Stripe'},
-    {val:b.filter(x=>x.isFirst).length,label:'Pack Bienvenu',delta:'1ères réservations'},
-  ];
-  document.getElementById('statsGrid').innerHTML=stats.map(s=>`
-    <div class="stat-card"><div class="stat-val">${s.val}</div><div class="stat-label">${s.label}</div><div class="stat-delta">${s.delta}</div></div>
-  `).join('');
-  const tbody=document.querySelector('#dashTable tbody');
-  tbody.innerHTML=b.slice(0,5).map(b=>bookingRow(b)).join('');
+function filterTable(){
+  const s=document.getElementById('filterStatus').value,q=document.getElementById('filterQ').value.toLowerCase();
+  renderRes(res.filter(r=>(!s||r.pay===s)&&(!q||r.name.toLowerCase().includes(q)||r.email.toLowerCase().includes(q)||r.date.toLowerCase().includes(q))));
 }
-
-// ── RESERVATIONS
-function renderReservations(){
-  const filter=document.getElementById('filterStatus')?.value||'';
-  let b=getBookings();
-  if(filter)b=b.filter(x=>x.status===filter||x.payment===filter);
-  document.getElementById('reservTable').innerHTML=b.map(bookingRow).join('');
-}
-
-const STATUS_LABEL={pending:'En attente',confirmed:'Confirmé',paid:'Payé en ligne',cancelled:'Annulé',onsite:'Paiement sur place'};
-const PAY_LABEL={online:'En ligne',onsite:'Sur place'};
-
-function bookingRow(b){
-  return `<tr>
-    <td><div style="font-weight:500">${b.name}</div><div style="font-family:var(--fm);font-size:.5rem;color:var(--muted)">${b.email}</div></td>
-    <td>${b.date}</td>
-    <td style="font-family:var(--fm)">${b.slot}</td>
-    <td style="font-family:var(--fm);font-size:.75rem;color:var(--muted)">${b.beatmaker||'—'}</td>
-    <td><span style="font-family:var(--fm);font-size:.52rem;color:${b.payment==='online'?'var(--gold)':'var(--muted)'}">${PAY_LABEL[b.payment]||'—'}${b.paid?' ✓':''}</span></td>
-    <td><span class="status-badge ${b.status}">${STATUS_LABEL[b.status]||b.status}</span></td>
-    <td>
-      <button class="action-btn" onclick="openDetail('${b.id}')">Voir</button>
-      ${b.status==='pending'?`<button class="action-btn" onclick="setStatus('${b.id}','confirmed')">Confirmer</button>`:''}
-      <button class="action-btn danger" onclick="setStatus('${b.id}','cancelled')">Annuler</button>
-    </td>
-  </tr>`;
-}
-
-function setStatus(id,status){
-  const b=getBookings();
-  const i=b.findIndex(x=>x.id===id);
-  if(i>=0){b[i].status=status;saveBookings(b);renderDashboard();renderReservations();updatePendingBadge()}
-}
-
-function openDetail(id){
-  const b=getBookings().find(x=>x.id===id);
-  if(!b)return;
-  document.getElementById('detailContent').innerHTML=
-    ['id','name','email','tel','date','slot','beatmaker','genre','payment','paid','amount','status','isFirst','createdAt']
-    .map(k=>`<div class="detail-row"><div class="detail-key">${k}</div><div class="detail-val">${String(b[k]||'—')}</div></div>`).join('');
-  document.getElementById('detailActions').innerHTML=
-    `<button class="t-btn primary" onclick="setStatus('${b.id}','confirmed');closeDetail()">Confirmer</button>
-     <button class="t-btn" onclick="setStatus('${b.id}','onsite');closeDetail()">Marquer paiement sur place</button>
-     <button class="t-btn" style="border-color:rgba(224,80,80,.3);color:var(--red)" onclick="setStatus('${b.id}','cancelled');closeDetail()">Annuler</button>`;
-  document.getElementById('detailModal').classList.add('open');
-}
-function closeDetail(){document.getElementById('detailModal').classList.remove('open')}
-
-// ── PLANNING
-let calDate=new Date();
-function renderPlanning(){
-  const y=calDate.getFullYear(),m=calDate.getMonth();
-  const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  document.getElementById('calLabel').textContent=MONTHS[m]+' '+y;
-  const bookings=getBookings().filter(b=>b.status!=='cancelled');
-  const firstDay=(new Date(y,m,1).getDay()+6)%7;
-  const days=new Date(y,m+1,0).getDate();
-  const grid=document.getElementById('adminCal');
-  grid.innerHTML='';
-  for(let i=0;i<firstDay;i++){const d=document.createElement('div');d.className='cal-cell';grid.appendChild(d)}
-  for(let d=1;d<=days;d++){
-    const cell=document.createElement('div');
-    const dayBookings=bookings.filter(b=>b.date.includes(`${d} `)||b.date.includes(` ${d},`)||b.date.endsWith(` ${d} ${y}`)||b.date.includes(`${d} mai`)||b.date.includes(`${d} juin`));
-    cell.className='cal-cell'+(dayBookings.length?' has-booking':'');
-    cell.innerHTML=`<div class="cal-cell-day">${d}</div>${dayBookings.map(b=>`<div class="cal-booking-dot" onclick="openDetail('${b.id}')" title="${b.name}">${b.slot} · ${b.name.split(' ')[0]}</div>`).join('')}`;
-    grid.appendChild(cell);
-  }
-}
-function calShift(n){calDate=new Date(calDate.getFullYear(),calDate.getMonth()+n,1);renderPlanning()}
-
-// ── PAYMENTS
-function renderPayments(){
-  const b=getBookings();
-  const totalOnline=b.filter(x=>x.paid&&x.payment==='online').reduce((s,x)=>s+x.amount,0);
-  const pending=b.filter(x=>!x.paid&&x.payment==='onsite').length;
-  document.getElementById('payStats').innerHTML=[
-    {val:'€'+totalOnline,label:'Encaissé en ligne',delta:'Via Stripe'},
-    {val:pending,label:'Paiement sur place',delta:'À encaisser'},
-    {val:b.filter(x=>x.isFirst).length,label:'Pack Bienvenu utilisés',delta:'100€ · 1ères résa'},
-  ].map(s=>`<div class="stat-card"><div class="stat-val">${s.val}</div><div class="stat-label">${s.label}</div><div class="stat-delta">${s.delta}</div></div>`).join('');
-  document.getElementById('payTable').innerHTML=b.map(b=>`<tr>
-    <td style="font-family:var(--fm);font-size:.72rem">${b.id}</td>
-    <td>${b.name}</td>
-    <td style="font-family:var(--fm)">€${b.amount}</td>
-    <td>${PAY_LABEL[b.payment]||'—'}</td>
-    <td style="font-family:var(--fm);font-size:.72rem;color:var(--muted)">${new Date(b.createdAt).toLocaleDateString('fr-FR')}</td>
-    <td><span class="status-badge ${b.paid?'paid':'pending'}">${b.paid?'Payé':'En attente'}</span></td>
-  </tr>`).join('');
-}
-
-// ── CONTACTS
-function renderContacts(){
-  const c=getContacts();
-  document.getElementById('contactTable').innerHTML=c.length?c.map(c=>`<tr>
-    <td>${c.name}</td><td>${c.email}</td><td style="font-family:var(--fm);font-size:.72rem">${c.type||'—'}</td>
-    <td style="font-size:.75rem;color:var(--muted)">${c.structure||'—'}</td>
-    <td><span class="status-badge ${c.presskit?'confirmed':'cancelled'}">${c.presskit?'Oui':'Non'}</span></td>
-    <td style="font-family:var(--fm);font-size:.65rem;color:var(--muted)">${c.date||'—'}</td>
-    <td><button class="action-btn" onclick="window.open('mailto:${c.email}')">Répondre</button>${c.presskit?`<button class="action-btn" onclick="sendKit('${c.email}')">Envoyer kit</button>`:''}</td>
-  </tr>`).join(''):
-  `<tr><td colspan="7" style="text-align:center;color:var(--muted);font-family:var(--fm);font-size:.58rem;padding:2rem">Aucune demande reçue — les formulaires Netlify apparaîtront ici</td></tr>`;
-}
-
-function sendKit(email){alert('Envoie manuellement le press kit à '+email+' avec le lien : https://akerecords.fr/AKE_press_kit_2026.html')}
-
-// ── SETTINGS
-function toggle(id){const el=document.getElementById('toggle'+id);el.classList.toggle('on')}
-function saveNotif(){alert('Email de notification sauvegardé : '+document.getElementById('notifEmail').value)}
-function changePwd(){const v=document.getElementById('newPwd').value;if(v.length>=6){localStorage.setItem('ake_admin_pwd',v);adminPwd=v;alert('Mot de passe modifié')}else alert('Minimum 6 caractères')}
-
-// ── CSV EXPORT
 function exportCSV(){
-  const b=getBookings();
-  const headers='ID,Nom,Email,Tel,Date,Creneau,Beatmaker,Genre,Paiement,Paye,Montant,Statut,1ereFois,Cree\n';
-  const rows=b.map(x=>[x.id,x.name,x.email,x.tel,x.date,x.slot,x.beatmaker,x.genre,x.payment,x.paid,x.amount,x.status,x.isFirst,x.createdAt].join(',')).join('\n');
-  const blob=new Blob([headers+rows],{type:'text/csv'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='reservations_ake.csv';a.click();
+  const h=['ID','Nom','Email','Date','Creneau','Beatmaker','Genre','Paiement','Montant'];
+  const rows=res.map(r=>[r.id,r.name,r.email,r.date,r.slot,r.bm,r.genre,r.pay,r.amount+'€'].map(v=>'"'+v+'"').join(','));
+  const csv=[h.join(','),...rows].join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='reservations_akerecords_'+new Date().toISOString().slice(0,10)+'.csv';a.click();notify('CSV exporte');
 }
+function addManual(){
+  const name=prompt('Nom du client :');if(!name)return;
+  const email=prompt('Email :',''),date=prompt('Date (ex: 20 Mai 2026) :',''),slot=prompt('Creneau (ex: 14h) :','');
+  const id='RSV'+String(res.length+1).padStart(3,'0');
+  res.unshift({id,name,email,date,slot,bm:'—',genre:'—',pay:'onsite',amount:0});
+  save();init();notify('Reservation ajoutee');
+}
+function openDetail(id){
+  currentId=id;const r=res.find(x=>x.id===id);if(!r)return;
+  document.getElementById('modalTitle').textContent='Reservation '+r.id;
+  document.getElementById('modalBody').innerHTML=`<div class="detail-row"><div class="detail-key">Client</div><div class="detail-val">${r.name}</div></div><div class="detail-row"><div class="detail-key">Email</div><div class="detail-val">${r.email}</div></div><div class="detail-row"><div class="detail-key">Date</div><div class="detail-val">${r.date}</div></div><div class="detail-row"><div class="detail-key">Creneau</div><div class="detail-val">${r.slot}</div></div><div class="detail-row"><div class="detail-key">Beatmaker</div><div class="detail-val">${r.bm||'—'}</div></div><div class="detail-row"><div class="detail-key">Genre</div><div class="detail-val">${r.genre||'—'}</div></div><div class="detail-row"><div class="detail-key">Paiement</div><div class="detail-val">${r.pay==='online'?'En ligne — 100€ encaisses':'Sur place (empreinte)'}</div></div>`;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal(){document.getElementById('modal').classList.remove('show');currentId=null;}
+function confirmRes(){notify('Email de confirmation envoye');closeModal();}
+function deleteRes(){if(currentId)delById(currentId);closeModal();}
+function delById(id){if(!confirm('Annuler cette session ?'))return;res=res.filter(r=>r.id!==id);save();init();notify('Session annulee');}
+async function testFn(){
+  const el=document.getElementById('fnSt');el.textContent='Test en cours…';el.className='ip-val';
+  try{
+    const r=await fetch('/.netlify/functions/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({test:true})});
+    el.textContent=(r.status===400||r.status===200)?'Fonction deployee et accessible':'Reponse: '+r.status;
+    el.className='ip-val '+(r.status===400||r.status===200?'ok':'warn');
+  }catch(e){el.textContent='Fonction non trouvee — deployer via PUSH.bat';el.className='ip-val err';}
+}
+async function sendTestEmail(){
+  const el=document.getElementById('emailRes');el.textContent='Envoi en cours…';
+  try{
+    await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'studio-reservation',client_name:'TEST ADMIN',client_email:'management@akerecords.fr',booking_date:'Test '+new Date().toLocaleDateString('fr-FR'),booking_slot:'Test',beatmaker:'—',genre:'Test',payment_mode:'test'})});
+    el.textContent='Formulaire envoye — verifie management@akerecords.fr';el.style.color='var(--green)';notify('Email test envoye');
+  }catch(e){el.textContent='Erreur: '+e.message;el.style.color='var(--red)';}
+}
+function notify(msg){const n=document.getElementById('notif');n.textContent=msg;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),3000);}
 </script>
 </body>
 </html>

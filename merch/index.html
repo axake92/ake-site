@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKE Records — Le Merch</title>
+<style>
+  :root{
+    --bg:#080808;
+    --panel:#131313;
+    --panel-2:#1b1b1b;
+    --line:rgba(255,255,255,.08);
+    --line-2:rgba(255,255,255,.18);
+    --txt:#f4f4f0;
+    --txt-2:#8c8c84;
+    --accent:#1db954;
+    --accent-dim:rgba(29,185,84,.14);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--txt);font-family:'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 18px}
+
+  .wrap{width:100%;max-width:1120px}
+  .head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:12px}
+  .title{font-size:clamp(30px,5vw,50px);font-weight:800;letter-spacing:-.025em;line-height:.95}
+  .sub{color:var(--txt-2);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
+  .brand{font-weight:800;letter-spacing:.2em;font-size:12px;color:var(--txt-2)}
+  .brand b{color:var(--txt)}
+  .brand .dot{color:var(--accent)}
+
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+  @media(max-width:880px){.grid{grid-template-columns:1fr}}
+
+  /* ===== VISUALISEUR ===== */
+  .stage{background:radial-gradient(130% 110% at 50% -5%,#1c1c1c 0%,#0a0a0a 65%);border:1px solid var(--line);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden;min-height:540px;display:flex;flex-direction:column;gap:18px}
+  .stage::after{content:'';position:absolute;inset:0;background:radial-gradient(55% 45% at 50% 42%,var(--accent-dim),transparent 70%);opacity:.5;pointer-events:none}
+  .view-tabs{display:flex;gap:6px;align-self:center;background:var(--panel-2);padding:5px;border-radius:999px;border:1px solid var(--line);z-index:2}
+  .view-tabs button{background:none;border:none;color:var(--txt-2);font-size:12px;font-weight:700;letter-spacing:.06em;padding:9px 22px;border-radius:999px;cursor:pointer;transition:.2s;text-transform:uppercase}
+  .view-tabs button.on{background:var(--accent);color:#04140a}
+
+  .tee-holder{flex:1;display:flex;align-items:center;justify-content:center;z-index:1;position:relative}
+  .tee-wrap{position:relative;width:min(460px,98%);aspect-ratio:300/340}
+  .tee-svg{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 26px 36px rgba(0,0,0,.55))}
+  .print{position:absolute;left:50%;transform:translateX(-50%);object-fit:contain;pointer-events:none;transition:opacity .25s, filter .25s;opacity:0}
+  .print.show{opacity:1}
+  /* recto: print poitrine — petit, centré sur le buste */
+  .print.front-pos{width:22%;top:31%}
+  /* verso: print dos — large, centré sur le dos */
+  .print.back-pos{width:46%;top:30%}
+  .print.front-pos.vertical{width:8%;top:30%}
+
+  /* ===== PANNEAU ===== */
+  .panel{display:flex;flex-direction:column;gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 16px 18px}
+  .card h3{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-2);margin-bottom:13px;font-weight:700;display:flex;justify-content:space-between}
+  .card h3 span{color:var(--txt);font-weight:600;letter-spacing:.02em;text-transform:none}
+
+  .swatches{display:flex;flex-wrap:wrap;gap:11px}
+  .sw{width:38px;height:38px;border-radius:50%;cursor:pointer;position:relative;border:2px solid var(--line-2);transition:transform .15s}
+  .sw:hover{transform:scale(1.09)}
+  .sw.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+
+  .designs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+  .dz{aspect-ratio:1;background:#fff;border:2px solid var(--line);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:7px;transition:.18s;overflow:hidden}
+  .dz.dark{background:#161616}
+  .dz img{max-width:100%;max-height:100%;object-fit:contain}
+  .dz.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+  .dz-name{grid-column:1/-1;font-size:11px;color:var(--txt-2);margin-top:3px}
+  .dz-name b{color:var(--txt);font-weight:600}
+
+  .colorways{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+  .cw{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2px solid var(--line-2);transition:.15s}
+  .cw:hover{transform:scale(1.08)}
+  .cw.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-dim)}
+
+  .sizes{display:flex;gap:7px;flex-wrap:wrap}
+  .size{min-width:44px;padding:10px 0;text-align:center;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;transition:.18s}
+  .size.on{border-color:var(--accent);background:var(--accent);color:#04140a}
+
+  .summary{display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .price{font-size:30px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+  .price small{font-size:12px;color:var(--txt-2);font-weight:500}
+  .add{flex:1;background:var(--accent);color:#04140a;border:none;border-radius:10px;padding:17px;font-size:14px;font-weight:800;letter-spacing:.05em;cursor:pointer;transition:.18s;text-transform:uppercase}
+  .add:hover{filter:brightness(1.08)}
+  .add:active{transform:scale(.98)}
+  .add.done{background:#fff}
+  .recap{font-size:12px;color:var(--txt-2);margin-top:12px;line-height:1.5}
+  .recap b{color:var(--txt);font-weight:600}
+
+  .cart-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--txt);background:var(--panel);border:1px solid var(--line-2);border-radius:999px;padding:10px 18px;font-size:13px;font-weight:700;letter-spacing:.04em;transition:.18s;position:relative}
+  .cart-link:hover{border-color:var(--accent);background:var(--accent-dim)}
+  .cart-ic{font-size:15px}
+  .cart-badge{background:var(--accent);color:#04140a;font-size:11px;font-weight:800;min-width:20px;height:20px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div>
+      <div class="title">Le Merch</div>
+      <div class="sub">Configure ta pièce · Summer Camp 2026</div>
+    </div>
+    <a href="panier.html" class="cart-link" id="cartLink" title="Voir le panier">
+      <span class="cart-ic">🛒</span> Panier
+      <span class="cart-badge" id="cartBadge">0</span>
+    </a>
+  </div>
+
+  <div class="grid">
+    <!-- VISUALISEUR -->
+    <div class="stage">
+      <div class="view-tabs">
+        <button id="btnFront" class="on" onclick="setView('front')">Recto</button>
+        <button id="btnBack" onclick="setView('back')">Verso</button>
+      </div>
+      <div class="tee-holder">
+        <div class="tee-wrap">
+          <svg class="tee-svg" id="tee" viewBox="0 0 300 340" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <clipPath id="bodyClip">
+                <path d="M105 40 L60 60 L40 110 L65 125 L70 110 L70 300 L230 300 L230 110 L235 125 L260 110 L240 60 L195 40 C190 65 110 65 105 40 Z"/>
+              </clipPath>
+            </defs>
+            <path id="teeBody" d="M105 40 L60 60 L40 110 L65 125 L70 110 L70 300 L230 300 L230 110 L235 125 L260 110 L240 60 L195 40 C190 65 110 65 105 40 Z"
+                  fill="#111" stroke="rgba(0,0,0,.3)" stroke-width="1"/>
+            <g clip-path="url(#bodyClip)">
+              <path d="M150 65 L150 300" stroke="#000" stroke-width="12" fill="none" opacity=".10"/>
+              <path d="M76 126 L76 300" stroke="#000" stroke-width="22" fill="none" opacity=".14"/>
+              <path d="M224 126 L224 300" stroke="#000" stroke-width="22" fill="none" opacity=".14"/>
+              <path d="M70 112 L230 112" stroke="#fff" stroke-width="2" fill="none" opacity=".05"/>
+            </g>
+            <path id="teeCollar" d="M105 40 C110 66 190 66 195 40 C175 53 125 53 105 40 Z" fill="#000" opacity=".4"/>
+          </svg>
+          <!-- impressions (image unique repositionnée selon vue) -->
+          <img class="print front-pos" id="printFront" alt="">
+          <img class="print back-pos" id="printBack" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- PANNEAU -->
+    <div class="panel">
+      <div class="card">
+        <h3>Couleur du tee <span id="teeColorName">Noir</span></h3>
+        <div class="swatches" id="swatches"></div>
+      </div>
+
+      <div class="card">
+        <h3>Design <span id="designName">Summer Camp</span></h3>
+        <div class="designs" id="designs"></div>
+        <div class="colorways" id="colorways"></div>
+      </div>
+
+      <div class="card">
+        <h3>Taille <span id="sizeName">M</span></h3>
+        <div class="sizes" id="sizes"></div>
+      </div>
+
+      <div class="card">
+        <div class="summary">
+          <div class="price">35€ <small>/ pièce</small></div>
+          <button class="add" id="addBtn" onclick="addToCart()">Ajouter au panier</button>
+        </div>
+        <div class="recap" id="recap"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ====== COULEURS TEXTILE ======
+  const TEE_COLORS=[
+    {id:'noir',  name:'Noir',         hex:'#141414', collar:'#000'},
+    {id:'blanc', name:'Blanc',        hex:'#f2f2ec', collar:'#d8d8cf'},
+    {id:'creme', name:'Crème',        hex:'#ddd3bf', collar:'#c8bda6'},
+    {id:'gris',  name:'Gris chiné',   hex:'#8f8f88', collar:'#76766f'},
+    {id:'vert',  name:'Vert AKE',     hex:'#1f6b41', collar:'#124a2c'},
+    {id:'bordeaux',name:'Bordeaux',   hex:'#5a1722', collar:'#3d0e16'},
+    {id:'nuit',  name:'Bleu nuit',    hex:'#1b2436', collar:'#101725'},
+  ];
+
+  // ====== DESIGNS & DECLINAISONS ======
+  // chemins relatifs vers /logos/
+  const P='logos/';
+  const DESIGNS=[
+    {
+      id:'summercamp', name:'Summer Camp', dark:false, layout:'wide',
+      colorways:[
+        {id:'v1',     hex:'#5b6fc4', file:'logo_merch_v1_transparent.png'},
+        {id:'orange', hex:'#e08a2b', file:'logo_merch_orange_ake_colored.png'},
+        {id:'rose',   hex:'#d94f8a', file:'logo_merch_rose_ake_colored.png'},
+        {id:'rouge',  hex:'#cc2027', file:'logo_merch_rouge_ake_colored.png'},
+        {id:'violet', hex:'#7d3bbf', file:'logo_merch_violet_ake_colored.png'},
+      ]
+    },
+    {
+      id:'drip', name:'Drip', dark:false, layout:'tall',
+      colorways:[
+        {id:'silver', hex:'#b7c2d4', file:'logo_drip_silver_transparent.png'},
+        {id:'orange', hex:'#e08a2b', file:'logo_drip_orange_transparent.png'},
+        {id:'rose',   hex:'#d94f8a', file:'logo_drip_rose_transparent.png'},
+        {id:'rouge',  hex:'#cc2027', file:'logo_drip_rouge_transparent.png'},
+        {id:'violet', hex:'#7d3bbf', file:'logo_drip_violet_transparent.png'},
+      ]
+    },
+    {
+      id:'arch', name:'AKE Arch', dark:false, layout:'tall',
+      colorways:[ {id:'silver', hex:'#b7c2d4', file:'logo_ake_arch_silver_transparent.png'} ]
+    },
+    {
+      id:'vertical', name:'AKE Vertical', dark:false, layout:'vertical',
+      colorways:[ {id:'noir', hex:'#111111', file:'logo_ake_vertical_transparent.png'} ]
+    },
+    {
+      id:'trenches', name:'Trenches', dark:false, layout:'wide',
+      colorways:[ {id:'rouge', hex:'#cc2027', file:'trenches_nobg.png'} ]
+    },
+  ];
+
+  const SIZES=['XS','S','M','L','XL','XXL'];
+  const PRICE=35;
+
+  let state={
+    tee:TEE_COLORS[0],
+    design:DESIGNS[0],
+    colorway:DESIGNS[0].colorways[0],
+    size:'M',
+    view:'front'
+  };
+
+  // build tee swatches
+  const swWrap=document.getElementById('swatches');
+  TEE_COLORS.forEach((c,i)=>{
+    const s=document.createElement('div');
+    s.className='sw'+(i===0?' on':'');
+    s.style.background=c.hex; s.title=c.name;
+    s.onclick=()=>{state.tee=c;document.querySelectorAll('#swatches .sw').forEach(x=>x.classList.remove('on'));s.classList.add('on');document.getElementById('teeColorName').textContent=c.name;render();};
+    swWrap.appendChild(s);
+  });
+
+  // build designs
+  const dWrap=document.getElementById('designs');
+  DESIGNS.forEach((d,i)=>{
+    const o=document.createElement('div');
+    o.className='dz'+(d.dark?' dark':'')+(i===0?' on':'');
+    const img=document.createElement('img');
+    img.src=P+d.colorways[0].file; img.alt=d.name;
+    o.appendChild(img);
+    o.onclick=()=>selectDesign(d,o);
+    dWrap.appendChild(o);
+  });
+
+  function selectDesign(d,el){
+    state.design=d; state.colorway=d.colorways[0];
+    document.querySelectorAll('#designs .dz').forEach(x=>x.classList.remove('on'));
+    el.classList.add('on');
+    document.getElementById('designName').textContent=d.name;
+    buildColorways();
+    render();
+  }
+
+  function buildColorways(){
+    const cw=document.getElementById('colorways');
+    cw.innerHTML='';
+    if(state.design.colorways.length<=1){return;}
+    state.design.colorways.forEach((c,i)=>{
+      const b=document.createElement('div');
+      b.className='cw'+(i===0?' on':'');
+      b.style.background=c.hex; b.title=c.id;
+      b.onclick=()=>{state.colorway=c;document.querySelectorAll('#colorways .cw').forEach(x=>x.classList.remove('on'));b.classList.add('on');render();};
+      cw.appendChild(b);
+    });
+  }
+
+  // build sizes
+  const szWrap=document.getElementById('sizes');
+  SIZES.forEach(sz=>{
+    const b=document.createElement('div');
+    b.className='size'+(sz==='M'?' on':'');
+    b.textContent=sz;
+    b.onclick=()=>{state.size=sz;document.querySelectorAll('.size').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('sizeName').textContent=sz;updateRecap();};
+    szWrap.appendChild(b);
+  });
+
+  function setView(v){
+    state.view=v;
+    document.getElementById('btnFront').classList.toggle('on',v==='front');
+    document.getElementById('btnBack').classList.toggle('on',v==='back');
+    render();
+  }
+
+  function render(){
+    // tee color
+    document.getElementById('teeBody').setAttribute('fill',state.tee.hex);
+    document.getElementById('teeCollar').setAttribute('fill',state.tee.collar);
+    document.getElementById('teeCollar').setAttribute('opacity', state.tee.id==='blanc'||state.tee.id==='creme'||state.tee.id==='gris'?'.55':'.4');
+
+    const src=P+state.colorway.file;
+    const pf=document.getElementById('printFront');
+    const pb=document.getElementById('printBack');
+    pf.src=src; pb.src=src;
+
+    // gérer le layout selon type de design
+    pf.classList.toggle('vertical', state.design.layout==='vertical');
+
+    // ajustement fin de taille selon orientation du design
+    const L=state.design.layout;
+    if(state.view==='front'){
+      if(L==='vertical'){ pf.style.width='8%'; pf.style.top='30%'; }
+      else if(L==='tall'){ pf.style.width='17%'; pf.style.top='30%'; }
+      else { pf.style.width='22%'; pf.style.top='32%'; } // wide
+    }else{
+      if(L==='vertical'){ pb.style.width='14%'; pb.style.top='28%'; }
+      else if(L==='tall'){ pb.style.width='38%'; pb.style.top='28%'; }
+      else { pb.style.width='48%'; pb.style.top='32%'; } // wide
+    }
+
+    // afficher selon vue
+    pf.classList.toggle('show', state.view==='front');
+    pb.classList.toggle('show', state.view==='back');
+
+    updateRecap();
+  }
+
+  function updateRecap(){
+    const cwTxt = state.design.colorways.length>1 ? ' · coloris <b>'+state.colorway.id+'</b>' : '';
+    document.getElementById('recap').innerHTML =
+      'Tee <b>'+state.tee.name+'</b> · design <b>'+state.design.name+'</b>'+cwTxt+' · taille <b>'+state.size+'</b><br>Impression recto poitrine + verso dos.';
+  }
+
+  function cartCount(){
+    try{ return JSON.parse(localStorage.getItem('ake_cart')||'[]').reduce((n,it)=>n+(it.qty||1),0); }catch(e){ return 0; }
+  }
+  function refreshBadge(){
+    const n=cartCount();
+    const b=document.getElementById('cartBadge');
+    b.textContent=n;
+    b.style.display=n>0?'inline-flex':'none';
+  }
+
+  function addToCart(){
+    const item={
+      product:'Tee AKE Records \u2014 '+state.design.name,
+      tee_color:state.tee.name,
+      tee_id:state.tee.id,
+      design:state.design.id,
+      design_name:state.design.name,
+      colorway:state.colorway.id,
+      file:state.colorway.file,
+      size:state.size,
+      price:PRICE,
+      qty:1
+    };
+    try{
+      const cart=JSON.parse(localStorage.getItem('ake_cart')||'[]');
+      const key=it=>it.design+'|'+it.colorway+'|'+it.tee_id+'|'+it.size;
+      const existing=cart.find(it=>key(it)===key(item));
+      if(existing){ existing.qty=(existing.qty||1)+1; }
+      else { cart.push(item); }
+      localStorage.setItem('ake_cart',JSON.stringify(cart));
+    }catch(e){}
+    refreshBadge();
+    const btn=document.getElementById('addBtn');
+    btn.classList.add('done'); btn.textContent='\u2713 Ajout\u00e9 \u2014 voir le panier';
+    btn.onclick=()=>{location.href='panier.html';};
+    setTimeout(()=>{btn.classList.remove('done');btn.textContent='Ajouter au panier';btn.onclick=addToCart;},2200);
+  }
+
+  buildColorways();
+  render();
+  refreshBadge();
+</script>
+</body>
+</html>

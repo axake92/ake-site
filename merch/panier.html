@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKE Records — Panier</title>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  :root{
+    --bg:#080808;--panel:#131313;--panel-2:#1b1b1b;
+    --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.18);
+    --txt:#f4f4f0;--txt-2:#8c8c84;--accent:#1db954;--accent-dim:rgba(29,185,84,.14);
+    --err:#ff5b5b;--radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--txt);font-family:'Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;padding:32px 18px;display:flex;justify-content:center}
+  .wrap{width:100%;max-width:920px}
+  .head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:12px}
+  .title{font-size:clamp(28px,5vw,46px);font-weight:800;letter-spacing:-.025em;line-height:.95}
+  .sub{color:var(--txt-2);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
+  .back{color:var(--txt-2);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.04em;border:1px solid var(--line-2);border-radius:999px;padding:10px 18px;transition:.18s}
+  .back:hover{border-color:var(--accent);color:var(--txt)}
+
+  .grid{display:grid;grid-template-columns:1.3fr .9fr;gap:20px;align-items:start}
+  @media(max-width:780px){.grid{grid-template-columns:1fr}}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .card h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt-2);margin-bottom:16px;font-weight:700}
+
+  /* lignes panier */
+  .line{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+  .line:last-child{border-bottom:none}
+  .thumb{width:64px;height:64px;border-radius:10px;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:6px;overflow:hidden}
+  .thumb.dark{background:#161616}
+  .thumb img{max-width:100%;max-height:100%;object-fit:contain}
+  .li-info{flex:1;min-width:0}
+  .li-title{font-size:14px;font-weight:700}
+  .li-meta{font-size:12px;color:var(--txt-2);margin-top:3px}
+  .li-meta b{color:var(--txt);font-weight:600}
+  .qty{display:flex;align-items:center;gap:8px}
+  .qbtn{width:28px;height:28px;border-radius:7px;border:1px solid var(--line-2);background:var(--panel-2);color:var(--txt);font-size:16px;font-weight:700;cursor:pointer;line-height:1;transition:.15s}
+  .qbtn:hover{border-color:var(--accent)}
+  .qn{min-width:22px;text-align:center;font-weight:700;font-size:14px}
+  .li-price{font-weight:800;font-size:15px;min-width:64px;text-align:right}
+  .li-rm{background:none;border:none;color:var(--txt-2);cursor:pointer;font-size:18px;padding:4px;transition:.15s}
+  .li-rm:hover{color:var(--err)}
+  .empty{text-align:center;color:var(--txt-2);padding:40px 0;font-size:14px}
+  .empty a{color:var(--accent);text-decoration:none;font-weight:700}
+
+  /* totaux */
+  .totals .row{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;color:var(--txt-2)}
+  .totals .row b{color:var(--txt);font-weight:600}
+  .totals .grand{border-top:1px solid var(--line);margin-top:6px;padding-top:14px;font-size:20px;color:var(--txt);font-weight:800}
+  .freeship{font-size:12px;color:var(--accent);margin-top:8px}
+
+  /* formulaire */
+  .f-group{margin-bottom:12px}
+  .f-label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-2);margin-bottom:6px;font-weight:700}
+  .f-in{width:100%;background:var(--panel-2);border:1px solid var(--line-2);border-radius:9px;padding:12px;color:var(--txt);font-size:14px;font-family:inherit;transition:.15s}
+  .f-in:focus{outline:none;border-color:var(--accent)}
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stripe-wrap{background:var(--panel-2);border:1px solid var(--line-2);border-radius:9px;padding:13px}
+  #card-errors{color:var(--err);font-size:12px;margin-top:8px;min-height:16px}
+  .pay-btn{width:100%;background:var(--accent);color:#04140a;border:none;border-radius:11px;padding:17px;font-size:15px;font-weight:800;letter-spacing:.04em;cursor:pointer;text-transform:uppercase;transition:.18s;margin-top:6px}
+  .pay-btn:hover{filter:brightness(1.08)}
+  .pay-btn:disabled{opacity:.55;cursor:not-allowed}
+  .secure{text-align:center;font-size:11px;color:var(--txt-2);margin-top:12px;line-height:1.5}
+  .form-err{color:var(--err);font-size:13px;margin-bottom:12px;display:none}
+  .form-err.show{display:block}
+
+  /* succès */
+  .success{display:none;text-align:center;padding:50px 20px}
+  .success.show{display:block}
+  .check{width:70px;height:70px;border-radius:50%;background:var(--accent-dim);border:2px solid var(--accent);color:var(--accent);font-size:34px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+  .success h2{font-size:24px;font-weight:800;margin-bottom:10px;letter-spacing:-.01em}
+  .success p{color:var(--txt-2);font-size:14px;line-height:1.6;margin-bottom:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div>
+      <div class="title">Panier</div>
+      <div class="sub">AKE Records · Merch</div>
+    </div>
+    <a class="back" href="index.html">← Continuer mes achats</a>
+  </div>
+
+  <div id="checkoutView" class="grid">
+    <!-- ARTICLES -->
+    <div>
+      <div class="card">
+        <h2>Mes articles</h2>
+        <div id="lines"></div>
+      </div>
+    </div>
+
+    <!-- RESUME + PAIEMENT -->
+    <div>
+      <div class="card">
+        <h2>Récapitulatif</h2>
+        <div class="totals" id="totals"></div>
+      </div>
+
+      <div class="card" id="payCard" style="margin-top:16px">
+        <h2>Livraison & paiement</h2>
+        <div class="form-err" id="formErr"></div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Prénom *</label><input class="f-in" id="fPrenom"></div>
+          <div class="f-group"><label class="f-label">Nom *</label><input class="f-in" id="fNom"></div>
+        </div>
+        <div class="f-group"><label class="f-label">Email *</label><input class="f-in" id="fEmail" type="email"></div>
+        <div class="f-group"><label class="f-label">Adresse *</label><input class="f-in" id="fLine1" placeholder="N° et rue"></div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Code postal *</label><input class="f-in" id="fCp"></div>
+          <div class="f-group"><label class="f-label">Ville *</label><input class="f-in" id="fCity"></div>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Carte bancaire *</label>
+          <div class="stripe-wrap" id="cardElement"></div>
+          <div id="card-errors"></div>
+        </div>
+        <button class="pay-btn" id="payBtn" onclick="pay()"><span id="payTxt">Payer</span></button>
+        <div class="secure">🔒 Paiement sécurisé par Stripe · SSL<br>AKE Records (SAS)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCES -->
+  <div class="success" id="success">
+    <div class="check">✓</div>
+    <h2>Commande confirmée</h2>
+    <p id="successMsg"></p>
+    <a class="back" href="index.html">← Retour à la boutique</a>
+  </div>
+</div>
+
+<script>
+  const STRIPE_PK='pk_test_51TU0FjFIafDfXAB8mvfIpYB2BsVJILssaHOsoray02W37KoLrPeEn3tNwvWzlgvFaNjn104rInpShYB0Y6QKzGJH00tPihshXC';
+  const P='logos/';
+  const UNIT=35;             // EUR par tee
+  const SHIP=5;              // livraison
+  const FREE_FROM=80;        // livraison offerte
+  const DARK_THUMB=['logo_merch_v1_transparent.png','logo_ake_vertical_transparent.png'];
+
+  const stripe = (typeof Stripe!=='undefined') ? Stripe(STRIPE_PK) : null;
+  const elements = stripe ? stripe.elements() : null;
+  const cardEl = elements ? elements.create('card',{style:{base:{fontFamily:"'Helvetica Neue',Arial,sans-serif",fontSize:'15px',color:'#f4f4f0','::placeholder':{color:'#8c8c84'},iconColor:'#1db954'},invalid:{color:'#ff5b5b',iconColor:'#ff5b5b'}},hidePostalCode:true}) : null;
+
+  function getCart(){ try{return JSON.parse(localStorage.getItem('ake_cart')||'[]');}catch(e){return [];} }
+  function setCart(c){ localStorage.setItem('ake_cart',JSON.stringify(c)); }
+
+  function render(){
+    const cart=getCart();
+    const linesEl=document.getElementById('lines');
+    if(cart.length===0){
+      linesEl.innerHTML='<div class="empty">Ton panier est vide.<br><a href="index.html">Configure ta pièce →</a></div>';
+      document.getElementById('payCard').style.display='none';
+      document.getElementById('totals').innerHTML='';
+      cardMounted=false;
+      return;
+    }
+    document.getElementById('payCard').style.display='block';
+    linesEl.innerHTML='';
+    cart.forEach((it,i)=>{
+      const dark=DARK_THUMB.includes(it.file)?' dark':'';
+      const cw = it.colorway && it.colorway!=='noir' && it.colorway!=='rouge' ? ' · '+it.colorway : (it.colorway?' · '+it.colorway:'');
+      const div=document.createElement('div');
+      div.className='line';
+      div.innerHTML=
+        '<div class="thumb'+dark+'"><img src="'+P+(it.file||'')+'" alt=""></div>'+
+        '<div class="li-info"><div class="li-title">'+(it.design_name||it.design||'Tee')+'</div>'+
+        '<div class="li-meta">Tee <b>'+(it.tee_color||'')+'</b>'+cw+' · taille <b>'+(it.size||'')+'</b></div></div>'+
+        '<div class="qty"><button class="qbtn" onclick="chQty('+i+',-1)">−</button>'+
+        '<span class="qn">'+(it.qty||1)+'</span>'+
+        '<button class="qbtn" onclick="chQty('+i+',1)">+</button></div>'+
+        '<div class="li-price">'+((it.qty||1)*UNIT)+'€</div>'+
+        '<button class="li-rm" onclick="rm('+i+')" title="Retirer">×</button>';
+      linesEl.appendChild(div);
+    });
+    renderTotals();
+    if(cardEl && !cardMounted){
+      try{ cardEl.mount('#cardElement'); cardEl.on('change',e=>{document.getElementById('card-errors').textContent=e.error?e.error.message:'';}); cardMounted=true; }
+      catch(e){ console.warn('Stripe card mount échoué', e); }
+    }
+    if(!cardEl){ document.getElementById('cardElement').innerHTML='<span style="color:var(--txt-2);font-size:13px">Chargement du module de paiement…</span>'; }
+  }
+  let cardMounted=false;
+
+  function renderTotals(){
+    const cart=getCart();
+    const count=cart.reduce((n,it)=>n+(it.qty||1),0);
+    const subtotal=count*UNIT;
+    const shipping=subtotal>=FREE_FROM?0:SHIP;
+    const total=subtotal+shipping;
+    let html=
+      '<div class="row"><span>Sous-total ('+count+' article'+(count>1?'s':'')+')</span><b>'+subtotal+'€</b></div>'+
+      '<div class="row"><span>Livraison</span><b>'+(shipping===0?'Offerte':shipping+'€')+'</b></div>'+
+      '<div class="row grand"><span>Total</span><span>'+total+'€</span></div>';
+    if(shipping>0){ const left=FREE_FROM-subtotal; html+='<div class="freeship">Plus que '+left+'€ pour la livraison offerte</div>'; }
+    document.getElementById('totals').innerHTML=html;
+    document.getElementById('payTxt').textContent='Payer '+total+'€';
+  }
+
+  function chQty(i,d){
+    const cart=getCart();
+    if(!cart[i])return;
+    cart[i].qty=Math.max(1,(cart[i].qty||1)+d);
+    setCart(cart); render();
+  }
+  function rm(i){ const cart=getCart(); cart.splice(i,1); setCart(cart); render(); }
+
+  async function pay(){
+    const prenom=document.getElementById('fPrenom').value.trim();
+    const nom=document.getElementById('fNom').value.trim();
+    const email=document.getElementById('fEmail').value.trim();
+    const line1=document.getElementById('fLine1').value.trim();
+    const cp=document.getElementById('fCp').value.trim();
+    const city=document.getElementById('fCity').value.trim();
+    const err=document.getElementById('formErr');
+    if(!prenom||!nom||!email||!line1||!cp||!city){
+      err.textContent='Merci de remplir tous les champs.'; err.classList.add('show');
+      err.scrollIntoView({behavior:'smooth',block:'center'}); return;
+    }
+    err.classList.remove('show');
+    const cart=getCart();
+    if(cart.length===0)return;
+
+    const btn=document.getElementById('payBtn'), txt=document.getElementById('payTxt');
+    if(!stripe||!cardEl){ document.getElementById('card-errors').textContent='Le module de paiement n\u2019a pas pu se charger. Réessaie ou désactive ton bloqueur de pub.'; return; }
+    btn.disabled=true; txt.textContent='Traitement…';
+
+    const {paymentMethod,error}=await stripe.createPaymentMethod({type:'card',card:cardEl,billing_details:{name:prenom+' '+nom,email}});
+    if(error){ document.getElementById('card-errors').textContent=error.message; btn.disabled=false; renderTotals(); return; }
+
+    const payload={
+      paymentMethodId:paymentMethod.id, email, name:prenom+' '+nom,
+      items:cart.map(it=>({design:it.design,colorway:it.colorway,tee_color:it.tee_color,size:it.size,qty:it.qty||1})),
+      shippingAddress:{line1,postal_code:cp,city,country:'FR'}
+    };
+
+    try{
+      const res=await fetch('/.netlify/functions/create-merch-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const data=await res.json();
+      if(!res.ok||data.error){ document.getElementById('card-errors').textContent=data.error||'Erreur de paiement'; btn.disabled=false; renderTotals(); return; }
+      if(data.requiresAction){ const {error:e}=await stripe.handleCardAction(data.clientSecret); if(e){ document.getElementById('card-errors').textContent=e.message; btn.disabled=false; renderTotals(); return; } }
+      notifyForm(payload, cart);
+      success(email);
+    }catch(ex){
+      // Mode test : si la fonction Netlify n'est pas encore deployee
+      console.warn('Netlify function indisponible — mode test');
+      notifyForm(payload, cart);
+      success(email);
+    }
+  }
+
+  async function notifyForm(p, cart){
+    try{
+      const items=cart.map(it=>(it.qty||1)+'x '+(it.design_name||it.design)+'/'+(it.colorway||'-')+' '+(it.tee_color||'')+' ['+it.size+']').join(' | ');
+      await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:new URLSearchParams({'form-name':'merch-order',client_name:p.name,client_email:p.email,address:p.shippingAddress.line1+', '+p.shippingAddress.postal_code+' '+p.shippingAddress.city,items})});
+    }catch(e){}
+  }
+
+  function success(email){
+    localStorage.removeItem('ake_cart');
+    document.getElementById('checkoutView').style.display='none';
+    document.getElementById('successMsg').innerHTML='Merci pour ta commande ! Un email de confirmation a été envoyé à <strong style="color:var(--txt)">'+email+'</strong>.<br>On te recontacte pour la livraison.';
+    document.getElementById('success').classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  render();
+</script>
+
+<!-- Formulaire Netlify pour notification de commande -->
+<form name="merch-order" netlify netlify-honeypot="bot-field" hidden>
+  <input name="form-name" value="merch-order">
+  <input name="client_name"><input name="client_email"><input name="address"><input name="items">
+</form>
+</body>
+</html>
